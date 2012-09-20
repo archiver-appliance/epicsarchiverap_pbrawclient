@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.GeneratedMessage;
 
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
@@ -152,5 +153,21 @@ public class EpicsMessage {
 			cal.set(year, 0, 1, 0, 0, 0);
 			startOfYearInEpochSeconds.put(year, cal.getTimeInMillis()/1000);
 		}
+	}
+	
+	public int getSeverity() { 
+		FieldDescriptor fdesc = message.getDescriptorForType().findFieldByNumber(4);
+		if(message.hasField(fdesc)) { 
+			return (Integer) message.getField(fdesc);
+		}
+		return 0;
+	}
+	
+	public int getStatus() { 
+		FieldDescriptor fdesc = message.getDescriptorForType().findFieldByNumber(5);
+		if(message.hasField(fdesc)) { 
+			return (Integer) message.getField(fdesc);
+		}
+		return 0;
 	}
 }

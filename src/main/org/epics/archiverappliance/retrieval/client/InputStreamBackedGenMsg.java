@@ -41,12 +41,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 		this.is = is;
 		readAndUnescapeLine(buf);
 		info = PayloadInfo.parseFrom(ByteString.copyFrom(buf));
-		readAndUnescapeLine(buf);
-		if(buf.hasRemaining()) { 
-			nextMsg = parseNextMessage();
-		} else { 
-			nextMsg = null;
-		}
+		readLineAndParseNextMessage();
 	}
 	
 	@Override
@@ -67,12 +62,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 			public EpicsMessage next() {
 				try { 
 					EpicsMessage ret = nextMsg;
-					readAndUnescapeLine(buf);
-					if(buf.hasRemaining()) { 
-						nextMsg = parseNextMessage();
-					} else { 
-						nextMsg = null;
-					}
+					readLineAndParseNextMessage();
 					return ret;
 				} catch(IOException ex) { 
 					throw new RuntimeIOException(ex);
@@ -87,7 +77,13 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 		}; 
 	}
 	
-	private void readAndUnescapeLine(ByteBuffer buf) throws IOException {
+	/**
+	 * Read a line into buf. Return true if we are exiting because of a newline; else return false.
+	 * @param buf
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean readAndUnescapeLine(ByteBuffer buf) throws IOException {
 		buf.clear();
 		int next = is.read(); 
 		while(next != -1) {
@@ -104,7 +100,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 				}
 			} else if(b == NEWLINE_CHAR) {
 				buf.flip();
-				return;
+				return true;
 			} else {
 				buf.put(b);
 			}
@@ -113,7 +109,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 		}
 
 		buf.flip();
-		return;
+		return false;
 	}
 
 	private static final byte ESCAPE_CHAR = 0x1B;
@@ -123,52 +119,93 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 	private static final byte CARRIAGERETURN_CHAR = 0x0D;
 	private static final byte CARRIAGERETURN_ESCAPE_CHAR = 0x03;
 	
-	private EpicsMessage parseNextMessage() throws IOException {
+	private boolean loopInfoLine() throws IOException {
+		int loopCount = 0;
+		boolean haveNewline = readAndUnescapeLine(buf);
+		while(loopCount++ < 1000) { 
+			if(!haveNewline && !buf.hasRemaining()) { 
+				// This is the end of the stream
+				return false;
+			} else if(haveNewline && !buf.hasRemaining()) { 
+				// We encountered an empty line. We expect a header next and data after that
+				readAndUnescapeLine(buf);
+				info = PayloadInfo.parseFrom(ByteString.copyFrom(buf));
+				haveNewline = readAndUnescapeLine(buf);
+			} else { 
+				// Regardless of whether the line ended in a newline or not, we have data in buf
+				return true;
+			}
+		}
+		throw new IOException("We are unable to determine next event in " + loopCount + " loops");
+	}
+	
+	private void readLineAndParseNextMessage() throws IOException {
+		boolean processNextMsg = loopInfoLine();
+		if(!processNextMsg) { 
+			nextMsg = null;
+			return;
+		}
+		
 		switch(info.getType()) { 
 		case SCALAR_BYTE: { 
-			return new EpicsMessage(ScalarByte.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarByte.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_DOUBLE: { 
-			return new EpicsMessage(ScalarDouble.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarDouble.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_ENUM: { 
-			return new EpicsMessage(ScalarEnum.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarEnum.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_FLOAT: { 
-			return new EpicsMessage(ScalarFloat.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarFloat.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_INT: { 
-			return new EpicsMessage(ScalarInt.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarInt.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_SHORT: { 
-			return new EpicsMessage(ScalarShort.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarShort.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case SCALAR_STRING: { 
-			return new EpicsMessage(ScalarString.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(ScalarString.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_BYTE: { 
-			return new EpicsMessage(VectorChar.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorChar.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_DOUBLE: { 
-			return new EpicsMessage(VectorDouble.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorDouble.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_ENUM: { 
-			return new EpicsMessage(VectorEnum.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorEnum.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_FLOAT: { 
-			return new EpicsMessage(VectorFloat.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorFloat.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_INT: { 
-			return new EpicsMessage(VectorInt.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorInt.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_SHORT: { 
-			return new EpicsMessage(VectorShort.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorShort.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case WAVEFORM_STRING: { 
-			return new EpicsMessage(VectorString.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(VectorString.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		case V4_GENERIC_BYTES: { 
-			return new EpicsMessage(V4GenericBytes.parseFrom(ByteString.copyFrom(buf)), info);
+			nextMsg = new EpicsMessage(V4GenericBytes.parseFrom(ByteString.copyFrom(buf)), info);
+			return;
 		}
 		default:
 			throw new IOException("Unknown type " + info.getType());

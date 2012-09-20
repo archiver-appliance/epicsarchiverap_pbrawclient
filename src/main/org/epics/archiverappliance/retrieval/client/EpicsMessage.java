@@ -15,18 +15,19 @@ import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
 public class EpicsMessage {
 	private GeneratedMessage message;
 	private PayloadInfo info;
+	private Timestamp ts;
 	public EpicsMessage(GeneratedMessage message, PayloadInfo info) { 
 		this.message = message;
 		this.info = info;
-	}
-	
-	public Timestamp getTimestamp() { 
 		int secondsIntoYear = (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(1));
 		int nanos = (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(2));
 		int year = info.getYear();
-		Timestamp ret = new Timestamp((startOfYearInEpochSeconds.get(year) + secondsIntoYear)*1000);
-		ret.setNanos(nanos);
-		return ret;
+		ts = new Timestamp((startOfYearInEpochSeconds.get(year) + secondsIntoYear)*1000);
+		ts.setNanos(nanos);
+	}
+	
+	public Timestamp getTimestamp() {
+		return ts;
 	}
 
 	public int getElementCount() { 

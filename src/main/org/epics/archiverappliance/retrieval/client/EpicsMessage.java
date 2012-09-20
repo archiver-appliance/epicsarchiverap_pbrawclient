@@ -148,7 +148,7 @@ public class EpicsMessage {
 		TimeZone timeZone = TimeZone.getTimeZone("UTC");
 		for(int year = 1970; year < 10000; year++) { 
 			Calendar cal = Calendar.getInstance(timeZone);
-			cal.set(year, 1, 1, 0, 0, 0);
+			cal.set(year, 0, 1, 0, 0, 0);
 			startOfYearInEpochSeconds.put(year, cal.getTimeInMillis()/1000);
 		}
 	}

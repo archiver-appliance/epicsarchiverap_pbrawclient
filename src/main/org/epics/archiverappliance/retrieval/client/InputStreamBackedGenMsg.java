@@ -1,6 +1,5 @@
 package org.epics.archiverappliance.retrieval.client;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -30,7 +29,7 @@ import edu.stanford.slac.archiverappliance.PB.EPICSEvent.VectorString;
  * @author mshankar
  *
  */
-public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
+public class InputStreamBackedGenMsg implements GenMsgIterator {
 	private InputStream is;
 	PayloadInfo info;
 	// The size of the ByteBuffer here is related to the MAX_LINE sizes in LineByteStream...

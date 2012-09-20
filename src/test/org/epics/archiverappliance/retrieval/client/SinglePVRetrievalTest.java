@@ -91,4 +91,31 @@ public class SinglePVRetrievalTest {
 		}
 	}
 	
+	/**
+	 * Test file with one data point per day for 2012; this is broken down into chunks of random sizes All data points are for 09:43:37 UTC. 
+	 * @throws Exception
+	 */
+	@Test
+	public void testMultipleChunksOfRandomSizeInSameYear() throws Exception {
+		try(FileInputStream fis = new FileInputStream("src/test/org/epics/archiverappliance/retrieval/client/sampledata/multipleChunksOfRandomSizeInSameYear"); InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
+			int eventCount = 0;
+			Timestamp previousTs = new Timestamp(0);
+			TimeZone timeZone = TimeZone.getTimeZone("UTC");
+			SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
+			Calendar expectedTime = Calendar.getInstance(timeZone);
+			expectedTime.set(2012, 0, 1, 9, 43, 37);
+			expectedTime.set(Calendar.MILLISECOND, 0);
+			for(EpicsMessage msg : is) {
+				Calendar actualTime = Calendar.getInstance(timeZone);
+				Timestamp ts = msg.getTimestamp();
+				assertTrue("Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime() + " and previous " + previousTs.getTime(), ts.getTime() >= previousTs.getTime());
+				actualTime.setTimeInMillis(ts.getTime());
+				assertTrue("Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is " + format.format(actualTime.getTime()) + " at event " + eventCount, expectedTime.compareTo(actualTime) == 0);
+				previousTs = ts;
+				expectedTime.add(Calendar.HOUR, 24);
+				eventCount++;
+			}
+			assertTrue("Event count is not what we expect. We got " + eventCount, eventCount == 366);
+		}
+	}
 }

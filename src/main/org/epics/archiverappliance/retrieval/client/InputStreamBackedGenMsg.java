@@ -36,6 +36,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 	// The size of the ByteBuffer here is related to the MAX_LINE sizes in LineByteStream...
 	ByteBuffer buf = ByteBuffer.allocate(16*1024*1024); 
 	EpicsMessage nextMsg = null;
+	int currentLine = 0;
 	
 	public InputStreamBackedGenMsg(InputStream is) throws IOException { 
 		this.is = is;
@@ -65,7 +66,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 					readLineAndParseNextMessage();
 					return ret;
 				} catch(IOException ex) { 
-					throw new RuntimeIOException(ex);
+					throw new RuntimeIOException("Exception near line " + currentLine, ex);
 				}
 			}
 
@@ -100,6 +101,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 				}
 			} else if(b == NEWLINE_CHAR) {
 				buf.flip();
+				currentLine++;
 				return true;
 			} else {
 				buf.put(b);
@@ -109,6 +111,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 		}
 
 		buf.flip();
+		currentLine++;
 		return false;
 	}
 
@@ -129,6 +132,11 @@ public class InputStreamBackedGenMsg implements GenMsgIterator, Closeable {
 			} else if(haveNewline && !buf.hasRemaining()) { 
 				// We encountered an empty line. We expect a header next and data after that
 				readAndUnescapeLine(buf);
+				if(!buf.hasRemaining()) { 
+					// We encountered an empty line and there was not enough info for a payload.
+					// We treat this as the end of the stream
+					return false;
+				}
 				info = PayloadInfo.parseFrom(ByteString.copyFrom(buf));
 				haveNewline = readAndUnescapeLine(buf);
 			} else { 

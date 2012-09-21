@@ -210,7 +210,9 @@ public class SinglePVRetrievalTest {
 				Timestamp ts = msg.getTimestamp();
 				assertTrue("Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime() + " and previous " + previousTs.getTime(), ts.getTime() >= previousTs.getTime());
 				actualTime.setTimeInMillis(ts.getTime());
-				assertTrue("Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is " + format.format(actualTime.getTime()) + " at event " + eventCount, expectedTime.compareTo(actualTime) == 0);
+				if(expectedTime.compareTo(actualTime) != 0) { 
+					assertTrue("Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is " + format.format(actualTime.getTime()) + " at event " + eventCount, expectedTime.compareTo(actualTime) == 0);
+				}
 				previousTs = ts;
 				expectedTime.add(Calendar.SECOND, 1);
 				eventCount++;

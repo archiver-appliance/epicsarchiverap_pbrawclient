@@ -13,13 +13,12 @@ public class CheckArchApplPing {
 			serverURL = args[0];
 		}
 		String archApplPingPV = "ArchApplPingPV";
-		String[] pvNamesArray = new String[] {  archApplPingPV };
 
 		Timestamp start = new Timestamp(System.currentTimeMillis()-1000);
 		Timestamp end = new Timestamp(System.currentTimeMillis());
 		boolean useReducedDataset = false;
 		RawDataRetrieval rawDataRetrieval = new RawDataRetrieval(serverURL + "/data/getData.raw");
-		GenMsgIterator strm = rawDataRetrieval.getDataForPVS(pvNamesArray, start, end, useReducedDataset);
+		GenMsgIterator strm = rawDataRetrieval.getDataForPV(archApplPingPV, start, end, useReducedDataset);
 		long totalValues = 0;
 		if(strm != null) {
 			try {

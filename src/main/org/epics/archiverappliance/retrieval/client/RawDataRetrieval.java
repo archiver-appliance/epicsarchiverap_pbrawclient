@@ -11,8 +11,10 @@ package org.epics.archiverappliance.retrieval.client;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -36,31 +38,27 @@ public class RawDataRetrieval implements DataRetrieval {
 	}
 
 	@Override
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime) {
-		return getDataForPVS(pvNames, startTime, endTime, false, null);
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime) {
+		return getDataForPV(pvName, startTime, endTime, false, null);
 	}
 
 	@Override
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet) {
-		return getDataForPVS(pvNames, startTime, endTime, useReducedDataSet, null);
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet) {
+		return getDataForPV(pvName, startTime, endTime, useReducedDataSet, null);
 	}
 
 	@Override
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet, HashMap<String, String> otherParams) {
-		StringWriter concatedPVs = new StringWriter();
-		boolean isFirstEntry = true;
-		for(String pvName : pvNames) {
-			if(isFirstEntry) {
-				isFirstEntry = false;
-			} else {
-				concatedPVs.append(",");
-			}
-			concatedPVs.append(pvName);
-		}
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet, HashMap<String, String> otherParams) {
 		// We'll use java.net for now.
 		StringWriter buf = new StringWriter();
+		String encode = pvName;
+		try { 
+			URLEncoder.encode(pvName, "UTF-8");
+		} catch (UnsupportedEncodingException ex) { 
+			encode=pvName;
+		}		
 		buf.append(accessURL)
-		.append("?pv=").append(concatedPVs.toString())
+		.append("?pv=").append(encode)
 		.append("&from=").append(convertToUTC(startTime))
 		.append("&to=").append(convertToUTC(endTime));
 		if(useReducedDataSet) {
@@ -85,7 +83,7 @@ public class RawDataRetrieval implements DataRetrieval {
 				if(is.available() <= 0) return null;
 				return new InputStreamBackedGenMsg(is);
 			} else { 
-				logger.info("No data found for PVs " + concatedPVs + " + using URL " + url.toString());
+				logger.info("No data found for PV " + pvName + " + using URL " + url.toString());
 				return null;
 			}
 		} catch(Exception ex) {

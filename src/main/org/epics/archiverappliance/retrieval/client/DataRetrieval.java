@@ -20,30 +20,30 @@ import java.util.HashMap;
 public interface DataRetrieval {
 	/**
 	 * Get data for PV from starttime to endtime.
-	 * @param pvNames
+	 * @param pvName
 	 * @param startTime
 	 * @param endTime
 	 * @return
 	 */
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime);
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime);
 	/**
 	 * Get data for PV from starttime to endtime using the system defined sparsification operator.
-	 * @param pvNames
+	 * @param pvName
 	 * @param startTime
 	 * @param endTime
-	 * @param useReducedDataSet - Use the server defined sparsification operator...
+	 * @param useReducedDataSet - If true, use the server defined sparsification operator...
 	 * @return
 	 */
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet);
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet);
 
 	/**
 	 * Get data for PV from starttime to endtime using the system defined sparsification operator; pass additional params in the HTTP call.
-	 * @param pvNames
+	 * @param pvName
 	 * @param startTime
 	 * @param endTime
-	 * @param useReducedDataSet - Use the server defined sparsification operator...
+	 * @param useReducedDataSet - If true, use the server defined sparsification operator...
 	 * @param otherParams - Any other name/value pairs that are passed onto the server. 
 	 * @return
 	 */
-	public GenMsgIterator getDataForPVS(String[] pvNames, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet, HashMap<String, String> otherParams);
+	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet, HashMap<String, String> otherParams);
 }

@@ -81,10 +81,9 @@ public class RawDataRetrieval implements DataRetrieval {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.connect();
 			if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				try(InputStream is = new BufferedInputStream(connection.getInputStream())) { 
-					if(is.available() <= 0) return null;
-					return new InputStreamBackedGenMsg(is);
-				}
+				InputStream is = new BufferedInputStream(connection.getInputStream());
+				if(is.available() <= 0) return null;
+				return new InputStreamBackedGenMsg(is);
 			} else { 
 				logger.info("No data found for PVs " + concatedPVs + " + using URL " + url.toString());
 				return null;

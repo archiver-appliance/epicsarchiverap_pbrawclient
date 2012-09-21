@@ -189,6 +189,38 @@ public class SinglePVRetrievalTest {
 			}
 		}
 	}
+	
+	/**
+	 * Test a days worth of data.
+	 * @throws Exception
+	 */
+	@Test
+	public void testOneDaysWorthOfDBRDoubleData() throws Exception {
+		try(FileInputStream fis = new FileInputStream("src/test/org/epics/archiverappliance/retrieval/client/sampledata/onedaysdbrdouble"); InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
+			int eventCount = 0;
+			Timestamp previousTs = new Timestamp(0);
+			TimeZone timeZone = TimeZone.getTimeZone("UTC");
+			SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
+			Calendar expectedTime = Calendar.getInstance(timeZone);
+			expectedTime.set(2011, 1, 1, 0, 0, 0);
+			expectedTime.set(Calendar.MILLISECOND, 0);
+			long startMillis = System.currentTimeMillis();
+			for(EpicsMessage msg : is) {
+				Calendar actualTime = Calendar.getInstance(timeZone);
+				Timestamp ts = msg.getTimestamp();
+				assertTrue("Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime() + " and previous " + previousTs.getTime(), ts.getTime() >= previousTs.getTime());
+				actualTime.setTimeInMillis(ts.getTime());
+				assertTrue("Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is " + format.format(actualTime.getTime()) + " at event " + eventCount, expectedTime.compareTo(actualTime) == 0);
+				previousTs = ts;
+				expectedTime.add(Calendar.SECOND, 1);
+				eventCount++;
+			}
+			assertTrue("Event count is not what we expect. We got " + eventCount, eventCount == 86400);
+			long endMillis = System.currentTimeMillis();
+			System.err.println("Time taken to process on days worth of data is " + (endMillis - startMillis) + "(ms)");
+		}
+	}
+
 
 
 }

@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.ScalarByte;
@@ -30,7 +33,12 @@ import edu.stanford.slac.archiverappliance.PB.EPICSEvent.VectorString;
  *
  */
 public class InputStreamBackedGenMsg implements GenMsgIterator {
+	private static Logger logger = Logger.getLogger(InputStreamBackedGenMsg.class.getName());
 	private InputStream is;
+	private byte[] isBuf = new byte[256*1024];
+	private int currentReadPointer = 0;
+	private int bytesRead = -1;
+	private long filePos = 0;
 	PayloadInfo info;
 	// The size of the ByteBuffer here is related to the MAX_LINE sizes in LineByteStream...
 	ByteBuffer buf = ByteBuffer.allocate(16*1024*1024); 
@@ -78,6 +86,15 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 	}
 	
 	/**
+	 * Calls to InputStream read are replaced with calls to this method instead
+	 */
+	private void fetchData() throws IOException {
+		currentReadPointer = 0;
+		filePos += bytesRead;
+		bytesRead = is.read(isBuf);
+	}
+	
+	/**
 	 * Read a line into buf. Return true if we are exiting because of a newline; else return false.
 	 * @param buf
 	 * @return
@@ -85,13 +102,38 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 	 */
 	private boolean readAndUnescapeLine(ByteBuffer buf) throws IOException {
 		buf.clear();
-		int next = is.read(); 
-		while(next != -1) {
-			byte b = (byte) next;
+		byte next = -1;
+		boolean hasNext = true;
+		// This is equivalent to an is.read()
+		if(currentReadPointer < bytesRead) { 
+			next = isBuf[currentReadPointer++];
+		} else { 
+			fetchData();
+			if(currentReadPointer < bytesRead) { 
+				next = isBuf[currentReadPointer++];
+			} else { 
+				hasNext = false;
+			}
+		}
+		// End of is.read()
+
+		while(hasNext) {
+			byte b = next;
 			if(b == ESCAPE_CHAR) {
-				next = is.read();
-				if(next == -1) { throw new IOException("Escape character terminated early"); }
-				b = (byte) next;
+				// This is equivalent to an is.read()
+				if(currentReadPointer < bytesRead) { 
+					next = isBuf[currentReadPointer++];
+				} else { 
+					fetchData();
+					if(currentReadPointer < bytesRead) { 
+						next = isBuf[currentReadPointer++];
+					} else { 
+						hasNext = false;
+					}
+				}
+				// End of is.read()
+				if(!hasNext) { throw new IOException("Escape character terminated early"); }
+				b = next;
 				switch(b) {
 				case ESCAPE_ESCAPE_CHAR: buf.put(ESCAPE_CHAR);break;
 				case NEWLINE_ESCAPE_CHAR: buf.put(NEWLINE_CHAR);break;
@@ -106,7 +148,18 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 				buf.put(b);
 			}
 			
-			next = is.read();
+			// This is equivalent to an is.read()
+			if(currentReadPointer < bytesRead) { 
+				next = isBuf[currentReadPointer++];
+			} else { 
+				fetchData();
+				if(currentReadPointer < bytesRead) { 
+					next = isBuf[currentReadPointer++];
+				} else { 
+					hasNext = false;
+				}
+			}
+			// End of is.read()
 		}
 
 		buf.flip();
@@ -153,69 +206,75 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 			return;
 		}
 		
-		switch(info.getType()) { 
-		case SCALAR_BYTE: { 
-			nextMsg = new EpicsMessage(ScalarByte.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_DOUBLE: { 
-			nextMsg = new EpicsMessage(ScalarDouble.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_ENUM: { 
-			nextMsg = new EpicsMessage(ScalarEnum.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_FLOAT: { 
-			nextMsg = new EpicsMessage(ScalarFloat.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_INT: { 
-			nextMsg = new EpicsMessage(ScalarInt.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_SHORT: { 
-			nextMsg = new EpicsMessage(ScalarShort.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case SCALAR_STRING: { 
-			nextMsg = new EpicsMessage(ScalarString.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_BYTE: { 
-			nextMsg = new EpicsMessage(VectorChar.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_DOUBLE: { 
-			nextMsg = new EpicsMessage(VectorDouble.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_ENUM: { 
-			nextMsg = new EpicsMessage(VectorEnum.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_FLOAT: { 
-			nextMsg = new EpicsMessage(VectorFloat.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_INT: { 
-			nextMsg = new EpicsMessage(VectorInt.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_SHORT: { 
-			nextMsg = new EpicsMessage(VectorShort.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case WAVEFORM_STRING: { 
-			nextMsg = new EpicsMessage(VectorString.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		case V4_GENERIC_BYTES: { 
-			nextMsg = new EpicsMessage(V4GenericBytes.parseFrom(ByteString.copyFrom(buf)), info);
-			return;
-		}
-		default:
-			throw new IOException("Unknown type " + info.getType());
+		ByteString byteString = ByteString.copyFrom(buf);
+		try { 
+			switch(info.getType()) { 
+			case SCALAR_BYTE: { 
+				nextMsg = new EpicsMessage(ScalarByte.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_DOUBLE: { 
+				nextMsg = new EpicsMessage(ScalarDouble.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_ENUM: { 
+				nextMsg = new EpicsMessage(ScalarEnum.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_FLOAT: { 
+				nextMsg = new EpicsMessage(ScalarFloat.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_INT: { 
+				nextMsg = new EpicsMessage(ScalarInt.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_SHORT: { 
+				nextMsg = new EpicsMessage(ScalarShort.parseFrom(byteString), info);
+				return;
+			}
+			case SCALAR_STRING: { 
+				nextMsg = new EpicsMessage(ScalarString.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_BYTE: { 
+				nextMsg = new EpicsMessage(VectorChar.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_DOUBLE: { 
+				nextMsg = new EpicsMessage(VectorDouble.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_ENUM: { 
+				nextMsg = new EpicsMessage(VectorEnum.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_FLOAT: { 
+				nextMsg = new EpicsMessage(VectorFloat.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_INT: { 
+				nextMsg = new EpicsMessage(VectorInt.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_SHORT: { 
+				nextMsg = new EpicsMessage(VectorShort.parseFrom(byteString), info);
+				return;
+			}
+			case WAVEFORM_STRING: { 
+				nextMsg = new EpicsMessage(VectorString.parseFrom(byteString), info);
+				return;
+			}
+			case V4_GENERIC_BYTES: { 
+				nextMsg = new EpicsMessage(V4GenericBytes.parseFrom(byteString), info);
+				return;
+			}
+			default:
+				throw new IOException("Unknown type " + info.getType());
+			}
+		} catch(InvalidProtocolBufferException ex) { 
+			logger.log(Level.WARNING, "Exception processing bytestring of size " + byteString.size() + " at position " + currentReadPointer + " with bytesRead " + bytesRead + " and filePos " + filePos, ex);
+			throw ex;
 		}
 	}
 

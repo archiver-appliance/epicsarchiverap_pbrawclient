@@ -13,6 +13,13 @@ import com.google.protobuf.GeneratedMessage;
 
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
 
+/**
+ * Similar to DBRTimeEvent but much more lightweight.
+ * Wraps a Protocol Buffer GeneratedMessage and return EPICS data.
+ * We would expect to see one of these per Event in the stream. 
+ * @author mshankar
+ *
+ */
 public class EpicsMessage {
 	private GeneratedMessage message;
 	private PayloadInfo info;

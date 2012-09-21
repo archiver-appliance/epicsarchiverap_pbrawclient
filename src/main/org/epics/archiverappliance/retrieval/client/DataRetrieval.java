@@ -7,19 +7,16 @@
  *******************************************************************************/
 package org.epics.archiverappliance.retrieval.client;
 
-import java.io.Reader;
 import java.sql.Timestamp;
 import java.util.HashMap;
 
 /**
  * Main interface for client retrieving data using the PB/HTTP protocol.
  * @author mshankar
- * @see DataRetrieval
- * @see Reader
  */
 public interface DataRetrieval {
 	/**
-	 * Get data for PV from starttime to endtime.
+	 * Get data for PV pvName from starttime to endtime. By default, we expect to get raw data.
 	 * @param pvName
 	 * @param startTime
 	 * @param endTime
@@ -27,7 +24,7 @@ public interface DataRetrieval {
 	 */
 	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime);
 	/**
-	 * Get data for PV from starttime to endtime using the system defined sparsification operator.
+	 * Get data for PV pvName from starttime to endtime using the system defined sparsification operator.
 	 * @param pvName
 	 * @param startTime
 	 * @param endTime
@@ -37,7 +34,7 @@ public interface DataRetrieval {
 	public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet);
 
 	/**
-	 * Get data for PV from starttime to endtime using the system defined sparsification operator; pass additional params in the HTTP call.
+	 * Get data for PV pvName from starttime to endtime using the system defined sparsification operator; pass additional params in the HTTP call.
 	 * @param pvName
 	 * @param startTime
 	 * @param endTime

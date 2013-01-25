@@ -40,6 +40,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 	private int bytesRead = -1;
 	private long filePos = 0;
 	PayloadInfo info;
+	InfoChangeHandler infoChangeHandler = null;
 	// The size of the ByteBuffer here is related to the MAX_LINE sizes in LineByteStream...
 	ByteBuffer buf = ByteBuffer.allocate(16*1024*1024); 
 	EpicsMessage nextMsg = null;
@@ -49,6 +50,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 		this.is = is;
 		readAndUnescapeLine(buf);
 		info = PayloadInfo.parseFrom(ByteString.copyFrom(buf));
+		if(this.infoChangeHandler != null) this.infoChangeHandler.handleInfoChange(info);
 		readLineAndParseNextMessage();
 	}
 	
@@ -190,6 +192,7 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 					return false;
 				}
 				info = PayloadInfo.parseFrom(ByteString.copyFrom(buf));
+				if(this.infoChangeHandler != null) this.infoChangeHandler.handleInfoChange(info);
 				haveNewline = readAndUnescapeLine(buf);
 			} else { 
 				// Regardless of whether the line ended in a newline or not, we have data in buf
@@ -284,5 +287,10 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 			is.close();
 			is = null;
 		}
+	}
+
+	@Override
+	public void onInfoChange(InfoChangeHandler handler) {
+		this.infoChangeHandler = handler;
 	}
 }

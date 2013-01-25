@@ -208,14 +208,19 @@ message PayloadInfo {
   required string pvname = 2;
   required int32 year = 3;
   optional int32 elementCount = 4;
-  optional double lowerDisplayLimit = 5;
-  optional double upperDisplayLimit = 6;
-  optional double lowerAlarmLimit = 7;
-  optional double upperAlarmLimit = 8;
-  optional double lowerCtrlLimit = 9;
-  optional double upperCtrlLimit = 10;
-  optional double lowerWarningLimit = 11;
-  optional double upperWarningLimit = 12;
-  optional double precision = 13;
-  optional string units = 14;
+// Items from 5 to 14 are no longer to be used. 
+// Stick these into the headers using the field names
+// For example, units comes in as EGU in the headers.
+  optional double unused00 = 5;
+  optional double unused01 = 6;
+  optional double unused02 = 7;
+  optional double unused03 = 8;
+  optional double unused04 = 9;
+  optional double unused05 = 10;
+  optional double unused06 = 11;
+  optional double unused07 = 12;
+  optional double unused08 = 13;
+  optional string unused09 = 14;
+// End of unused elements
+  repeated FieldValue headers = 15;
 }

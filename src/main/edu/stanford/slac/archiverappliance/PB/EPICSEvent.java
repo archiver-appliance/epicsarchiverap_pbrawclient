@@ -15803,45 +15803,55 @@ public final class EPICSEvent {
     boolean hasElementCount();
     int getElementCount();
     
-    // optional double lowerDisplayLimit = 5;
-    boolean hasLowerDisplayLimit();
-    double getLowerDisplayLimit();
+    // optional double unused00 = 5;
+    boolean hasUnused00();
+    double getUnused00();
     
-    // optional double upperDisplayLimit = 6;
-    boolean hasUpperDisplayLimit();
-    double getUpperDisplayLimit();
+    // optional double unused01 = 6;
+    boolean hasUnused01();
+    double getUnused01();
     
-    // optional double lowerAlarmLimit = 7;
-    boolean hasLowerAlarmLimit();
-    double getLowerAlarmLimit();
+    // optional double unused02 = 7;
+    boolean hasUnused02();
+    double getUnused02();
     
-    // optional double upperAlarmLimit = 8;
-    boolean hasUpperAlarmLimit();
-    double getUpperAlarmLimit();
+    // optional double unused03 = 8;
+    boolean hasUnused03();
+    double getUnused03();
     
-    // optional double lowerCtrlLimit = 9;
-    boolean hasLowerCtrlLimit();
-    double getLowerCtrlLimit();
+    // optional double unused04 = 9;
+    boolean hasUnused04();
+    double getUnused04();
     
-    // optional double upperCtrlLimit = 10;
-    boolean hasUpperCtrlLimit();
-    double getUpperCtrlLimit();
+    // optional double unused05 = 10;
+    boolean hasUnused05();
+    double getUnused05();
     
-    // optional double lowerWarningLimit = 11;
-    boolean hasLowerWarningLimit();
-    double getLowerWarningLimit();
+    // optional double unused06 = 11;
+    boolean hasUnused06();
+    double getUnused06();
     
-    // optional double upperWarningLimit = 12;
-    boolean hasUpperWarningLimit();
-    double getUpperWarningLimit();
+    // optional double unused07 = 12;
+    boolean hasUnused07();
+    double getUnused07();
     
-    // optional double precision = 13;
-    boolean hasPrecision();
-    double getPrecision();
+    // optional double unused08 = 13;
+    boolean hasUnused08();
+    double getUnused08();
     
-    // optional string units = 14;
-    boolean hasUnits();
-    String getUnits();
+    // optional string unused09 = 14;
+    boolean hasUnused09();
+    String getUnused09();
+    
+    // repeated .EPICS.FieldValue headers = 15;
+    java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> 
+        getHeadersList();
+    edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue getHeaders(int index);
+    int getHeadersCount();
+    java.util.List<? extends edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder> 
+        getHeadersOrBuilderList();
+    edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder getHeadersOrBuilder(
+        int index);
   }
   public static final class PayloadInfo extends
       com.google.protobuf.GeneratedMessage
@@ -15934,104 +15944,104 @@ public final class EPICSEvent {
       return elementCount_;
     }
     
-    // optional double lowerDisplayLimit = 5;
-    public static final int LOWERDISPLAYLIMIT_FIELD_NUMBER = 5;
-    private double lowerDisplayLimit_;
-    public boolean hasLowerDisplayLimit() {
+    // optional double unused00 = 5;
+    public static final int UNUSED00_FIELD_NUMBER = 5;
+    private double unused00_;
+    public boolean hasUnused00() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
-    public double getLowerDisplayLimit() {
-      return lowerDisplayLimit_;
+    public double getUnused00() {
+      return unused00_;
     }
     
-    // optional double upperDisplayLimit = 6;
-    public static final int UPPERDISPLAYLIMIT_FIELD_NUMBER = 6;
-    private double upperDisplayLimit_;
-    public boolean hasUpperDisplayLimit() {
+    // optional double unused01 = 6;
+    public static final int UNUSED01_FIELD_NUMBER = 6;
+    private double unused01_;
+    public boolean hasUnused01() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
-    public double getUpperDisplayLimit() {
-      return upperDisplayLimit_;
+    public double getUnused01() {
+      return unused01_;
     }
     
-    // optional double lowerAlarmLimit = 7;
-    public static final int LOWERALARMLIMIT_FIELD_NUMBER = 7;
-    private double lowerAlarmLimit_;
-    public boolean hasLowerAlarmLimit() {
+    // optional double unused02 = 7;
+    public static final int UNUSED02_FIELD_NUMBER = 7;
+    private double unused02_;
+    public boolean hasUnused02() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
-    public double getLowerAlarmLimit() {
-      return lowerAlarmLimit_;
+    public double getUnused02() {
+      return unused02_;
     }
     
-    // optional double upperAlarmLimit = 8;
-    public static final int UPPERALARMLIMIT_FIELD_NUMBER = 8;
-    private double upperAlarmLimit_;
-    public boolean hasUpperAlarmLimit() {
+    // optional double unused03 = 8;
+    public static final int UNUSED03_FIELD_NUMBER = 8;
+    private double unused03_;
+    public boolean hasUnused03() {
       return ((bitField0_ & 0x00000080) == 0x00000080);
     }
-    public double getUpperAlarmLimit() {
-      return upperAlarmLimit_;
+    public double getUnused03() {
+      return unused03_;
     }
     
-    // optional double lowerCtrlLimit = 9;
-    public static final int LOWERCTRLLIMIT_FIELD_NUMBER = 9;
-    private double lowerCtrlLimit_;
-    public boolean hasLowerCtrlLimit() {
+    // optional double unused04 = 9;
+    public static final int UNUSED04_FIELD_NUMBER = 9;
+    private double unused04_;
+    public boolean hasUnused04() {
       return ((bitField0_ & 0x00000100) == 0x00000100);
     }
-    public double getLowerCtrlLimit() {
-      return lowerCtrlLimit_;
+    public double getUnused04() {
+      return unused04_;
     }
     
-    // optional double upperCtrlLimit = 10;
-    public static final int UPPERCTRLLIMIT_FIELD_NUMBER = 10;
-    private double upperCtrlLimit_;
-    public boolean hasUpperCtrlLimit() {
+    // optional double unused05 = 10;
+    public static final int UNUSED05_FIELD_NUMBER = 10;
+    private double unused05_;
+    public boolean hasUnused05() {
       return ((bitField0_ & 0x00000200) == 0x00000200);
     }
-    public double getUpperCtrlLimit() {
-      return upperCtrlLimit_;
+    public double getUnused05() {
+      return unused05_;
     }
     
-    // optional double lowerWarningLimit = 11;
-    public static final int LOWERWARNINGLIMIT_FIELD_NUMBER = 11;
-    private double lowerWarningLimit_;
-    public boolean hasLowerWarningLimit() {
+    // optional double unused06 = 11;
+    public static final int UNUSED06_FIELD_NUMBER = 11;
+    private double unused06_;
+    public boolean hasUnused06() {
       return ((bitField0_ & 0x00000400) == 0x00000400);
     }
-    public double getLowerWarningLimit() {
-      return lowerWarningLimit_;
+    public double getUnused06() {
+      return unused06_;
     }
     
-    // optional double upperWarningLimit = 12;
-    public static final int UPPERWARNINGLIMIT_FIELD_NUMBER = 12;
-    private double upperWarningLimit_;
-    public boolean hasUpperWarningLimit() {
+    // optional double unused07 = 12;
+    public static final int UNUSED07_FIELD_NUMBER = 12;
+    private double unused07_;
+    public boolean hasUnused07() {
       return ((bitField0_ & 0x00000800) == 0x00000800);
     }
-    public double getUpperWarningLimit() {
-      return upperWarningLimit_;
+    public double getUnused07() {
+      return unused07_;
     }
     
-    // optional double precision = 13;
-    public static final int PRECISION_FIELD_NUMBER = 13;
-    private double precision_;
-    public boolean hasPrecision() {
+    // optional double unused08 = 13;
+    public static final int UNUSED08_FIELD_NUMBER = 13;
+    private double unused08_;
+    public boolean hasUnused08() {
       return ((bitField0_ & 0x00001000) == 0x00001000);
     }
-    public double getPrecision() {
-      return precision_;
+    public double getUnused08() {
+      return unused08_;
     }
     
-    // optional string units = 14;
-    public static final int UNITS_FIELD_NUMBER = 14;
-    private java.lang.Object units_;
-    public boolean hasUnits() {
+    // optional string unused09 = 14;
+    public static final int UNUSED09_FIELD_NUMBER = 14;
+    private java.lang.Object unused09_;
+    public boolean hasUnused09() {
       return ((bitField0_ & 0x00002000) == 0x00002000);
     }
-    public String getUnits() {
-      java.lang.Object ref = units_;
+    public String getUnused09() {
+      java.lang.Object ref = unused09_;
       if (ref instanceof String) {
         return (String) ref;
       } else {
@@ -16039,21 +16049,42 @@ public final class EPICSEvent {
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          units_ = s;
+          unused09_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getUnitsBytes() {
-      java.lang.Object ref = units_;
+    private com.google.protobuf.ByteString getUnused09Bytes() {
+      java.lang.Object ref = unused09_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        units_ = b;
+        unused09_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
+    }
+    
+    // repeated .EPICS.FieldValue headers = 15;
+    public static final int HEADERS_FIELD_NUMBER = 15;
+    private java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> headers_;
+    public java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> getHeadersList() {
+      return headers_;
+    }
+    public java.util.List<? extends edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder> 
+        getHeadersOrBuilderList() {
+      return headers_;
+    }
+    public int getHeadersCount() {
+      return headers_.size();
+    }
+    public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue getHeaders(int index) {
+      return headers_.get(index);
+    }
+    public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder getHeadersOrBuilder(
+        int index) {
+      return headers_.get(index);
     }
     
     private void initFields() {
@@ -16061,16 +16092,17 @@ public final class EPICSEvent {
       pvname_ = "";
       year_ = 0;
       elementCount_ = 0;
-      lowerDisplayLimit_ = 0D;
-      upperDisplayLimit_ = 0D;
-      lowerAlarmLimit_ = 0D;
-      upperAlarmLimit_ = 0D;
-      lowerCtrlLimit_ = 0D;
-      upperCtrlLimit_ = 0D;
-      lowerWarningLimit_ = 0D;
-      upperWarningLimit_ = 0D;
-      precision_ = 0D;
-      units_ = "";
+      unused00_ = 0D;
+      unused01_ = 0D;
+      unused02_ = 0D;
+      unused03_ = 0D;
+      unused04_ = 0D;
+      unused05_ = 0D;
+      unused06_ = 0D;
+      unused07_ = 0D;
+      unused08_ = 0D;
+      unused09_ = "";
+      headers_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -16088,6 +16120,12 @@ public final class EPICSEvent {
       if (!hasYear()) {
         memoizedIsInitialized = 0;
         return false;
+      }
+      for (int i = 0; i < getHeadersCount(); i++) {
+        if (!getHeaders(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       memoizedIsInitialized = 1;
       return true;
@@ -16109,34 +16147,37 @@ public final class EPICSEvent {
         output.writeInt32(4, elementCount_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeDouble(5, lowerDisplayLimit_);
+        output.writeDouble(5, unused00_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeDouble(6, upperDisplayLimit_);
+        output.writeDouble(6, unused01_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeDouble(7, lowerAlarmLimit_);
+        output.writeDouble(7, unused02_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeDouble(8, upperAlarmLimit_);
+        output.writeDouble(8, unused03_);
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeDouble(9, lowerCtrlLimit_);
+        output.writeDouble(9, unused04_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeDouble(10, upperCtrlLimit_);
+        output.writeDouble(10, unused05_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
-        output.writeDouble(11, lowerWarningLimit_);
+        output.writeDouble(11, unused06_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
-        output.writeDouble(12, upperWarningLimit_);
+        output.writeDouble(12, unused07_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
-        output.writeDouble(13, precision_);
+        output.writeDouble(13, unused08_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        output.writeBytes(14, getUnitsBytes());
+        output.writeBytes(14, getUnused09Bytes());
+      }
+      for (int i = 0; i < headers_.size(); i++) {
+        output.writeMessage(15, headers_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -16165,43 +16206,47 @@ public final class EPICSEvent {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(5, lowerDisplayLimit_);
+          .computeDoubleSize(5, unused00_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(6, upperDisplayLimit_);
+          .computeDoubleSize(6, unused01_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(7, lowerAlarmLimit_);
+          .computeDoubleSize(7, unused02_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(8, upperAlarmLimit_);
+          .computeDoubleSize(8, unused03_);
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(9, lowerCtrlLimit_);
+          .computeDoubleSize(9, unused04_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(10, upperCtrlLimit_);
+          .computeDoubleSize(10, unused05_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(11, lowerWarningLimit_);
+          .computeDoubleSize(11, unused06_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(12, upperWarningLimit_);
+          .computeDoubleSize(12, unused07_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(13, precision_);
+          .computeDoubleSize(13, unused08_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(14, getUnitsBytes());
+          .computeBytesSize(14, getUnused09Bytes());
+      }
+      for (int i = 0; i < headers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(15, headers_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -16319,6 +16364,7 @@ public final class EPICSEvent {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getHeadersFieldBuilder();
         }
       }
       private static Builder create() {
@@ -16335,26 +16381,32 @@ public final class EPICSEvent {
         bitField0_ = (bitField0_ & ~0x00000004);
         elementCount_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
-        lowerDisplayLimit_ = 0D;
+        unused00_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000010);
-        upperDisplayLimit_ = 0D;
+        unused01_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000020);
-        lowerAlarmLimit_ = 0D;
+        unused02_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000040);
-        upperAlarmLimit_ = 0D;
+        unused03_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000080);
-        lowerCtrlLimit_ = 0D;
+        unused04_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000100);
-        upperCtrlLimit_ = 0D;
+        unused05_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000200);
-        lowerWarningLimit_ = 0D;
+        unused06_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000400);
-        upperWarningLimit_ = 0D;
+        unused07_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000800);
-        precision_ = 0D;
+        unused08_ = 0D;
         bitField0_ = (bitField0_ & ~0x00001000);
-        units_ = "";
+        unused09_ = "";
         bitField0_ = (bitField0_ & ~0x00002000);
+        if (headersBuilder_ == null) {
+          headers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00004000);
+        } else {
+          headersBuilder_.clear();
+        }
         return this;
       }
       
@@ -16412,43 +16464,52 @@ public final class EPICSEvent {
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.lowerDisplayLimit_ = lowerDisplayLimit_;
+        result.unused00_ = unused00_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.upperDisplayLimit_ = upperDisplayLimit_;
+        result.unused01_ = unused01_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.lowerAlarmLimit_ = lowerAlarmLimit_;
+        result.unused02_ = unused02_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
-        result.upperAlarmLimit_ = upperAlarmLimit_;
+        result.unused03_ = unused03_;
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000100;
         }
-        result.lowerCtrlLimit_ = lowerCtrlLimit_;
+        result.unused04_ = unused04_;
         if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000200;
         }
-        result.upperCtrlLimit_ = upperCtrlLimit_;
+        result.unused05_ = unused05_;
         if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
           to_bitField0_ |= 0x00000400;
         }
-        result.lowerWarningLimit_ = lowerWarningLimit_;
+        result.unused06_ = unused06_;
         if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
           to_bitField0_ |= 0x00000800;
         }
-        result.upperWarningLimit_ = upperWarningLimit_;
+        result.unused07_ = unused07_;
         if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
           to_bitField0_ |= 0x00001000;
         }
-        result.precision_ = precision_;
+        result.unused08_ = unused08_;
         if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
           to_bitField0_ |= 0x00002000;
         }
-        result.units_ = units_;
+        result.unused09_ = unused09_;
+        if (headersBuilder_ == null) {
+          if (((bitField0_ & 0x00004000) == 0x00004000)) {
+            headers_ = java.util.Collections.unmodifiableList(headers_);
+            bitField0_ = (bitField0_ & ~0x00004000);
+          }
+          result.headers_ = headers_;
+        } else {
+          result.headers_ = headersBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -16477,35 +16538,61 @@ public final class EPICSEvent {
         if (other.hasElementCount()) {
           setElementCount(other.getElementCount());
         }
-        if (other.hasLowerDisplayLimit()) {
-          setLowerDisplayLimit(other.getLowerDisplayLimit());
+        if (other.hasUnused00()) {
+          setUnused00(other.getUnused00());
         }
-        if (other.hasUpperDisplayLimit()) {
-          setUpperDisplayLimit(other.getUpperDisplayLimit());
+        if (other.hasUnused01()) {
+          setUnused01(other.getUnused01());
         }
-        if (other.hasLowerAlarmLimit()) {
-          setLowerAlarmLimit(other.getLowerAlarmLimit());
+        if (other.hasUnused02()) {
+          setUnused02(other.getUnused02());
         }
-        if (other.hasUpperAlarmLimit()) {
-          setUpperAlarmLimit(other.getUpperAlarmLimit());
+        if (other.hasUnused03()) {
+          setUnused03(other.getUnused03());
         }
-        if (other.hasLowerCtrlLimit()) {
-          setLowerCtrlLimit(other.getLowerCtrlLimit());
+        if (other.hasUnused04()) {
+          setUnused04(other.getUnused04());
         }
-        if (other.hasUpperCtrlLimit()) {
-          setUpperCtrlLimit(other.getUpperCtrlLimit());
+        if (other.hasUnused05()) {
+          setUnused05(other.getUnused05());
         }
-        if (other.hasLowerWarningLimit()) {
-          setLowerWarningLimit(other.getLowerWarningLimit());
+        if (other.hasUnused06()) {
+          setUnused06(other.getUnused06());
         }
-        if (other.hasUpperWarningLimit()) {
-          setUpperWarningLimit(other.getUpperWarningLimit());
+        if (other.hasUnused07()) {
+          setUnused07(other.getUnused07());
         }
-        if (other.hasPrecision()) {
-          setPrecision(other.getPrecision());
+        if (other.hasUnused08()) {
+          setUnused08(other.getUnused08());
         }
-        if (other.hasUnits()) {
-          setUnits(other.getUnits());
+        if (other.hasUnused09()) {
+          setUnused09(other.getUnused09());
+        }
+        if (headersBuilder_ == null) {
+          if (!other.headers_.isEmpty()) {
+            if (headers_.isEmpty()) {
+              headers_ = other.headers_;
+              bitField0_ = (bitField0_ & ~0x00004000);
+            } else {
+              ensureHeadersIsMutable();
+              headers_.addAll(other.headers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.headers_.isEmpty()) {
+            if (headersBuilder_.isEmpty()) {
+              headersBuilder_.dispose();
+              headersBuilder_ = null;
+              headers_ = other.headers_;
+              bitField0_ = (bitField0_ & ~0x00004000);
+              headersBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getHeadersFieldBuilder() : null;
+            } else {
+              headersBuilder_.addAllMessages(other.headers_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -16523,6 +16610,12 @@ public final class EPICSEvent {
         if (!hasYear()) {
           
           return false;
+        }
+        for (int i = 0; i < getHeadersCount(); i++) {
+          if (!getHeaders(i).isInitialized()) {
+            
+            return false;
+          }
         }
         return true;
       }
@@ -16578,52 +16671,58 @@ public final class EPICSEvent {
             }
             case 41: {
               bitField0_ |= 0x00000010;
-              lowerDisplayLimit_ = input.readDouble();
+              unused00_ = input.readDouble();
               break;
             }
             case 49: {
               bitField0_ |= 0x00000020;
-              upperDisplayLimit_ = input.readDouble();
+              unused01_ = input.readDouble();
               break;
             }
             case 57: {
               bitField0_ |= 0x00000040;
-              lowerAlarmLimit_ = input.readDouble();
+              unused02_ = input.readDouble();
               break;
             }
             case 65: {
               bitField0_ |= 0x00000080;
-              upperAlarmLimit_ = input.readDouble();
+              unused03_ = input.readDouble();
               break;
             }
             case 73: {
               bitField0_ |= 0x00000100;
-              lowerCtrlLimit_ = input.readDouble();
+              unused04_ = input.readDouble();
               break;
             }
             case 81: {
               bitField0_ |= 0x00000200;
-              upperCtrlLimit_ = input.readDouble();
+              unused05_ = input.readDouble();
               break;
             }
             case 89: {
               bitField0_ |= 0x00000400;
-              lowerWarningLimit_ = input.readDouble();
+              unused06_ = input.readDouble();
               break;
             }
             case 97: {
               bitField0_ |= 0x00000800;
-              upperWarningLimit_ = input.readDouble();
+              unused07_ = input.readDouble();
               break;
             }
             case 105: {
               bitField0_ |= 0x00001000;
-              precision_ = input.readDouble();
+              unused08_ = input.readDouble();
               break;
             }
             case 114: {
               bitField0_ |= 0x00002000;
-              units_ = input.readBytes();
+              unused09_ = input.readBytes();
+              break;
+            }
+            case 122: {
+              edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder subBuilder = edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addHeaders(subBuilder.buildPartial());
               break;
             }
           }
@@ -16734,229 +16833,415 @@ public final class EPICSEvent {
         return this;
       }
       
-      // optional double lowerDisplayLimit = 5;
-      private double lowerDisplayLimit_ ;
-      public boolean hasLowerDisplayLimit() {
+      // optional double unused00 = 5;
+      private double unused00_ ;
+      public boolean hasUnused00() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
-      public double getLowerDisplayLimit() {
-        return lowerDisplayLimit_;
+      public double getUnused00() {
+        return unused00_;
       }
-      public Builder setLowerDisplayLimit(double value) {
+      public Builder setUnused00(double value) {
         bitField0_ |= 0x00000010;
-        lowerDisplayLimit_ = value;
+        unused00_ = value;
         onChanged();
         return this;
       }
-      public Builder clearLowerDisplayLimit() {
+      public Builder clearUnused00() {
         bitField0_ = (bitField0_ & ~0x00000010);
-        lowerDisplayLimit_ = 0D;
+        unused00_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double upperDisplayLimit = 6;
-      private double upperDisplayLimit_ ;
-      public boolean hasUpperDisplayLimit() {
+      // optional double unused01 = 6;
+      private double unused01_ ;
+      public boolean hasUnused01() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
-      public double getUpperDisplayLimit() {
-        return upperDisplayLimit_;
+      public double getUnused01() {
+        return unused01_;
       }
-      public Builder setUpperDisplayLimit(double value) {
+      public Builder setUnused01(double value) {
         bitField0_ |= 0x00000020;
-        upperDisplayLimit_ = value;
+        unused01_ = value;
         onChanged();
         return this;
       }
-      public Builder clearUpperDisplayLimit() {
+      public Builder clearUnused01() {
         bitField0_ = (bitField0_ & ~0x00000020);
-        upperDisplayLimit_ = 0D;
+        unused01_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double lowerAlarmLimit = 7;
-      private double lowerAlarmLimit_ ;
-      public boolean hasLowerAlarmLimit() {
+      // optional double unused02 = 7;
+      private double unused02_ ;
+      public boolean hasUnused02() {
         return ((bitField0_ & 0x00000040) == 0x00000040);
       }
-      public double getLowerAlarmLimit() {
-        return lowerAlarmLimit_;
+      public double getUnused02() {
+        return unused02_;
       }
-      public Builder setLowerAlarmLimit(double value) {
+      public Builder setUnused02(double value) {
         bitField0_ |= 0x00000040;
-        lowerAlarmLimit_ = value;
+        unused02_ = value;
         onChanged();
         return this;
       }
-      public Builder clearLowerAlarmLimit() {
+      public Builder clearUnused02() {
         bitField0_ = (bitField0_ & ~0x00000040);
-        lowerAlarmLimit_ = 0D;
+        unused02_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double upperAlarmLimit = 8;
-      private double upperAlarmLimit_ ;
-      public boolean hasUpperAlarmLimit() {
+      // optional double unused03 = 8;
+      private double unused03_ ;
+      public boolean hasUnused03() {
         return ((bitField0_ & 0x00000080) == 0x00000080);
       }
-      public double getUpperAlarmLimit() {
-        return upperAlarmLimit_;
+      public double getUnused03() {
+        return unused03_;
       }
-      public Builder setUpperAlarmLimit(double value) {
+      public Builder setUnused03(double value) {
         bitField0_ |= 0x00000080;
-        upperAlarmLimit_ = value;
+        unused03_ = value;
         onChanged();
         return this;
       }
-      public Builder clearUpperAlarmLimit() {
+      public Builder clearUnused03() {
         bitField0_ = (bitField0_ & ~0x00000080);
-        upperAlarmLimit_ = 0D;
+        unused03_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double lowerCtrlLimit = 9;
-      private double lowerCtrlLimit_ ;
-      public boolean hasLowerCtrlLimit() {
+      // optional double unused04 = 9;
+      private double unused04_ ;
+      public boolean hasUnused04() {
         return ((bitField0_ & 0x00000100) == 0x00000100);
       }
-      public double getLowerCtrlLimit() {
-        return lowerCtrlLimit_;
+      public double getUnused04() {
+        return unused04_;
       }
-      public Builder setLowerCtrlLimit(double value) {
+      public Builder setUnused04(double value) {
         bitField0_ |= 0x00000100;
-        lowerCtrlLimit_ = value;
+        unused04_ = value;
         onChanged();
         return this;
       }
-      public Builder clearLowerCtrlLimit() {
+      public Builder clearUnused04() {
         bitField0_ = (bitField0_ & ~0x00000100);
-        lowerCtrlLimit_ = 0D;
+        unused04_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double upperCtrlLimit = 10;
-      private double upperCtrlLimit_ ;
-      public boolean hasUpperCtrlLimit() {
+      // optional double unused05 = 10;
+      private double unused05_ ;
+      public boolean hasUnused05() {
         return ((bitField0_ & 0x00000200) == 0x00000200);
       }
-      public double getUpperCtrlLimit() {
-        return upperCtrlLimit_;
+      public double getUnused05() {
+        return unused05_;
       }
-      public Builder setUpperCtrlLimit(double value) {
+      public Builder setUnused05(double value) {
         bitField0_ |= 0x00000200;
-        upperCtrlLimit_ = value;
+        unused05_ = value;
         onChanged();
         return this;
       }
-      public Builder clearUpperCtrlLimit() {
+      public Builder clearUnused05() {
         bitField0_ = (bitField0_ & ~0x00000200);
-        upperCtrlLimit_ = 0D;
+        unused05_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double lowerWarningLimit = 11;
-      private double lowerWarningLimit_ ;
-      public boolean hasLowerWarningLimit() {
+      // optional double unused06 = 11;
+      private double unused06_ ;
+      public boolean hasUnused06() {
         return ((bitField0_ & 0x00000400) == 0x00000400);
       }
-      public double getLowerWarningLimit() {
-        return lowerWarningLimit_;
+      public double getUnused06() {
+        return unused06_;
       }
-      public Builder setLowerWarningLimit(double value) {
+      public Builder setUnused06(double value) {
         bitField0_ |= 0x00000400;
-        lowerWarningLimit_ = value;
+        unused06_ = value;
         onChanged();
         return this;
       }
-      public Builder clearLowerWarningLimit() {
+      public Builder clearUnused06() {
         bitField0_ = (bitField0_ & ~0x00000400);
-        lowerWarningLimit_ = 0D;
+        unused06_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double upperWarningLimit = 12;
-      private double upperWarningLimit_ ;
-      public boolean hasUpperWarningLimit() {
+      // optional double unused07 = 12;
+      private double unused07_ ;
+      public boolean hasUnused07() {
         return ((bitField0_ & 0x00000800) == 0x00000800);
       }
-      public double getUpperWarningLimit() {
-        return upperWarningLimit_;
+      public double getUnused07() {
+        return unused07_;
       }
-      public Builder setUpperWarningLimit(double value) {
+      public Builder setUnused07(double value) {
         bitField0_ |= 0x00000800;
-        upperWarningLimit_ = value;
+        unused07_ = value;
         onChanged();
         return this;
       }
-      public Builder clearUpperWarningLimit() {
+      public Builder clearUnused07() {
         bitField0_ = (bitField0_ & ~0x00000800);
-        upperWarningLimit_ = 0D;
+        unused07_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional double precision = 13;
-      private double precision_ ;
-      public boolean hasPrecision() {
+      // optional double unused08 = 13;
+      private double unused08_ ;
+      public boolean hasUnused08() {
         return ((bitField0_ & 0x00001000) == 0x00001000);
       }
-      public double getPrecision() {
-        return precision_;
+      public double getUnused08() {
+        return unused08_;
       }
-      public Builder setPrecision(double value) {
+      public Builder setUnused08(double value) {
         bitField0_ |= 0x00001000;
-        precision_ = value;
+        unused08_ = value;
         onChanged();
         return this;
       }
-      public Builder clearPrecision() {
+      public Builder clearUnused08() {
         bitField0_ = (bitField0_ & ~0x00001000);
-        precision_ = 0D;
+        unused08_ = 0D;
         onChanged();
         return this;
       }
       
-      // optional string units = 14;
-      private java.lang.Object units_ = "";
-      public boolean hasUnits() {
+      // optional string unused09 = 14;
+      private java.lang.Object unused09_ = "";
+      public boolean hasUnused09() {
         return ((bitField0_ & 0x00002000) == 0x00002000);
       }
-      public String getUnits() {
-        java.lang.Object ref = units_;
+      public String getUnused09() {
+        java.lang.Object ref = unused09_;
         if (!(ref instanceof String)) {
           String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          units_ = s;
+          unused09_ = s;
           return s;
         } else {
           return (String) ref;
         }
       }
-      public Builder setUnits(String value) {
+      public Builder setUnused09(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00002000;
-        units_ = value;
+        unused09_ = value;
         onChanged();
         return this;
       }
-      public Builder clearUnits() {
+      public Builder clearUnused09() {
         bitField0_ = (bitField0_ & ~0x00002000);
-        units_ = getDefaultInstance().getUnits();
+        unused09_ = getDefaultInstance().getUnused09();
         onChanged();
         return this;
       }
-      void setUnits(com.google.protobuf.ByteString value) {
+      void setUnused09(com.google.protobuf.ByteString value) {
         bitField0_ |= 0x00002000;
-        units_ = value;
+        unused09_ = value;
         onChanged();
+      }
+      
+      // repeated .EPICS.FieldValue headers = 15;
+      private java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> headers_ =
+        java.util.Collections.emptyList();
+      private void ensureHeadersIsMutable() {
+        if (!((bitField0_ & 0x00004000) == 0x00004000)) {
+          headers_ = new java.util.ArrayList<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue>(headers_);
+          bitField0_ |= 0x00004000;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder> headersBuilder_;
+      
+      public java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> getHeadersList() {
+        if (headersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(headers_);
+        } else {
+          return headersBuilder_.getMessageList();
+        }
+      }
+      public int getHeadersCount() {
+        if (headersBuilder_ == null) {
+          return headers_.size();
+        } else {
+          return headersBuilder_.getCount();
+        }
+      }
+      public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue getHeaders(int index) {
+        if (headersBuilder_ == null) {
+          return headers_.get(index);
+        } else {
+          return headersBuilder_.getMessage(index);
+        }
+      }
+      public Builder setHeaders(
+          int index, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue value) {
+        if (headersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHeadersIsMutable();
+          headers_.set(index, value);
+          onChanged();
+        } else {
+          headersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setHeaders(
+          int index, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder builderForValue) {
+        if (headersBuilder_ == null) {
+          ensureHeadersIsMutable();
+          headers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          headersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addHeaders(edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue value) {
+        if (headersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHeadersIsMutable();
+          headers_.add(value);
+          onChanged();
+        } else {
+          headersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addHeaders(
+          int index, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue value) {
+        if (headersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureHeadersIsMutable();
+          headers_.add(index, value);
+          onChanged();
+        } else {
+          headersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addHeaders(
+          edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder builderForValue) {
+        if (headersBuilder_ == null) {
+          ensureHeadersIsMutable();
+          headers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          headersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addHeaders(
+          int index, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder builderForValue) {
+        if (headersBuilder_ == null) {
+          ensureHeadersIsMutable();
+          headers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          headersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllHeaders(
+          java.lang.Iterable<? extends edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue> values) {
+        if (headersBuilder_ == null) {
+          ensureHeadersIsMutable();
+          super.addAll(values, headers_);
+          onChanged();
+        } else {
+          headersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearHeaders() {
+        if (headersBuilder_ == null) {
+          headers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00004000);
+          onChanged();
+        } else {
+          headersBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removeHeaders(int index) {
+        if (headersBuilder_ == null) {
+          ensureHeadersIsMutable();
+          headers_.remove(index);
+          onChanged();
+        } else {
+          headersBuilder_.remove(index);
+        }
+        return this;
+      }
+      public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder getHeadersBuilder(
+          int index) {
+        return getHeadersFieldBuilder().getBuilder(index);
+      }
+      public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder getHeadersOrBuilder(
+          int index) {
+        if (headersBuilder_ == null) {
+          return headers_.get(index);  } else {
+          return headersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder> 
+           getHeadersOrBuilderList() {
+        if (headersBuilder_ != null) {
+          return headersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(headers_);
+        }
+      }
+      public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder addHeadersBuilder() {
+        return getHeadersFieldBuilder().addBuilder(
+            edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.getDefaultInstance());
+      }
+      public edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder addHeadersBuilder(
+          int index) {
+        return getHeadersFieldBuilder().addBuilder(
+            index, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.getDefaultInstance());
+      }
+      public java.util.List<edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder> 
+           getHeadersBuilderList() {
+        return getHeadersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder> 
+          getHeadersFieldBuilder() {
+        if (headersBuilder_ == null) {
+          headersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue.Builder, edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValueOrBuilder>(
+                  headers_,
+                  ((bitField0_ & 0x00004000) == 0x00004000),
+                  getParentForChildren(),
+                  isClean());
+          headers_ = null;
+        }
+        return headersBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:EPICS.PayloadInfo)
@@ -17139,25 +17424,24 @@ public final class EPICSEvent {
       " \002(\r\022\013\n\003val\030\003 \002(\014\022\023\n\010severity\030\004 \001(\005:\0010\022\021" +
       "\n\006status\030\005 \001(\005:\0010\022\023\n\013repeatcount\030\006 \001(\r\022&" +
       "\n\013fieldvalues\030\007 \003(\0132\021.EPICS.FieldValue\022\031" +
-      "\n\021fieldactualchange\030\010 \001(\010\"\323\002\n\013PayloadInf" +
+      "\n\021fieldactualchange\030\010 \001(\010\"\273\002\n\013PayloadInf" +
       "o\022 \n\004type\030\001 \002(\0162\022.EPICS.PayloadType\022\016\n\006p" +
       "vname\030\002 \002(\t\022\014\n\004year\030\003 \002(\005\022\024\n\014elementCoun" +
-      "t\030\004 \001(\005\022\031\n\021lowerDisplayLimit\030\005 \001(\001\022\031\n\021up" +
-      "perDisplayLimit\030\006 \001(\001\022\027\n\017lowerAlarmLimit",
-      "\030\007 \001(\001\022\027\n\017upperAlarmLimit\030\010 \001(\001\022\026\n\016lower" +
-      "CtrlLimit\030\t \001(\001\022\026\n\016upperCtrlLimit\030\n \001(\001\022" +
-      "\031\n\021lowerWarningLimit\030\013 \001(\001\022\031\n\021upperWarni" +
-      "ngLimit\030\014 \001(\001\022\021\n\tprecision\030\r \001(\001\022\r\n\005unit" +
-      "s\030\016 \001(\t*\251\002\n\013PayloadType\022\021\n\rSCALAR_STRING" +
-      "\020\000\022\020\n\014SCALAR_SHORT\020\001\022\020\n\014SCALAR_FLOAT\020\002\022\017" +
-      "\n\013SCALAR_ENUM\020\003\022\017\n\013SCALAR_BYTE\020\004\022\016\n\nSCAL" +
-      "AR_INT\020\005\022\021\n\rSCALAR_DOUBLE\020\006\022\023\n\017WAVEFORM_" +
-      "STRING\020\007\022\022\n\016WAVEFORM_SHORT\020\010\022\022\n\016WAVEFORM" +
-      "_FLOAT\020\t\022\021\n\rWAVEFORM_ENUM\020\n\022\021\n\rWAVEFORM_",
-      "BYTE\020\013\022\020\n\014WAVEFORM_INT\020\014\022\023\n\017WAVEFORM_DOU" +
-      "BLE\020\r\022\024\n\020V4_GENERIC_BYTES\020\016B4\n&edu.stanf" +
-      "ord.slac.archiverappliance.PBB\nEPICSEven" +
-      "t"
+      "t\030\004 \001(\005\022\020\n\010unused00\030\005 \001(\001\022\020\n\010unused01\030\006 " +
+      "\001(\001\022\020\n\010unused02\030\007 \001(\001\022\020\n\010unused03\030\010 \001(\001\022",
+      "\020\n\010unused04\030\t \001(\001\022\020\n\010unused05\030\n \001(\001\022\020\n\010u" +
+      "nused06\030\013 \001(\001\022\020\n\010unused07\030\014 \001(\001\022\020\n\010unuse" +
+      "d08\030\r \001(\001\022\020\n\010unused09\030\016 \001(\t\022\"\n\007headers\030\017" +
+      " \003(\0132\021.EPICS.FieldValue*\251\002\n\013PayloadType\022" +
+      "\021\n\rSCALAR_STRING\020\000\022\020\n\014SCALAR_SHORT\020\001\022\020\n\014" +
+      "SCALAR_FLOAT\020\002\022\017\n\013SCALAR_ENUM\020\003\022\017\n\013SCALA" +
+      "R_BYTE\020\004\022\016\n\nSCALAR_INT\020\005\022\021\n\rSCALAR_DOUBL" +
+      "E\020\006\022\023\n\017WAVEFORM_STRING\020\007\022\022\n\016WAVEFORM_SHO" +
+      "RT\020\010\022\022\n\016WAVEFORM_FLOAT\020\t\022\021\n\rWAVEFORM_ENU" +
+      "M\020\n\022\021\n\rWAVEFORM_BYTE\020\013\022\020\n\014WAVEFORM_INT\020\014",
+      "\022\023\n\017WAVEFORM_DOUBLE\020\r\022\024\n\020V4_GENERIC_BYTE" +
+      "S\020\016B4\n&edu.stanford.slac.archiverapplian" +
+      "ce.PBB\nEPICSEvent"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -17297,7 +17581,7 @@ public final class EPICSEvent {
           internal_static_EPICS_PayloadInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_EPICS_PayloadInfo_descriptor,
-              new java.lang.String[] { "Type", "Pvname", "Year", "ElementCount", "LowerDisplayLimit", "UpperDisplayLimit", "LowerAlarmLimit", "UpperAlarmLimit", "LowerCtrlLimit", "UpperCtrlLimit", "LowerWarningLimit", "UpperWarningLimit", "Precision", "Units", },
+              new java.lang.String[] { "Type", "Pvname", "Year", "ElementCount", "Unused00", "Unused01", "Unused02", "Unused03", "Unused04", "Unused05", "Unused06", "Unused07", "Unused08", "Unused09", "Headers", },
               edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo.class,
               edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo.Builder.class);
           return null;

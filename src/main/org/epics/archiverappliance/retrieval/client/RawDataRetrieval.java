@@ -92,9 +92,14 @@ public class RawDataRetrieval implements DataRetrieval {
 		return null;
 	}
 	
-	private static String convertToUTC(Timestamp time) { 
-		Calendar c = GregorianCalendar.getInstance();
-		c.setTime(time);
-		return DatatypeConverter.printDateTime(c);		
+	private static String convertToUTC(Timestamp time) {
+		try { 
+			Calendar c = GregorianCalendar.getInstance();
+			c.setTime(time);
+			return URLEncoder.encode(DatatypeConverter.printDateTime(c), "UTF-8");		
+		} catch (UnsupportedEncodingException ex) {
+			logger.log(Level.SEVERE, "Cannot encode times into UTF-8", ex);
+			return null;
+		}		
 	}	
 }

@@ -7,10 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.swing.plaf.basic.BasicBorders.FieldBorder;
+
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.GeneratedMessage;
 
+import edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue;
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
 
 /**
@@ -32,6 +35,10 @@ public class EpicsMessage {
 		int year = info.getYear();
 		ts = new Timestamp((startOfYearInEpochSeconds.get(year) + secondsIntoYear)*1000);
 		ts.setNanos(nanos);
+	}
+	
+	public EpicsMessage(EpicsMessage otherMessage) { 
+		this(otherMessage.message, otherMessage.info);
 	}
 	
 	public Timestamp getTimestamp() {
@@ -176,5 +183,27 @@ public class EpicsMessage {
 			return (Integer) message.getField(fdesc);
 		}
 		return 0;
+	}
+	
+	public boolean hasFieldValues() { 
+		FieldDescriptor fdesc = message.getDescriptorForType().findFieldByNumber(7);
+		if(message.getRepeatedFieldCount(fdesc) > 0) { 
+			return true;
+		}
+		return false;
+	}
+	
+	public HashMap<String, String> getFieldValues() { 
+		HashMap<String, String> ret = new HashMap<String, String>();
+		FieldDescriptor fdesc = message.getDescriptorForType().findFieldByNumber(7);
+		if(message.getRepeatedFieldCount(fdesc) > 0) { 
+			@SuppressWarnings("unchecked")
+			List<FieldValue> fieldValues = (List<FieldValue>) message.getField(fdesc);
+			for(FieldValue fieldValue : fieldValues) { 
+				ret.put(fieldValue.getName(), fieldValue.getVal());
+			}
+		}
+		return ret;
+		
 	}
 }

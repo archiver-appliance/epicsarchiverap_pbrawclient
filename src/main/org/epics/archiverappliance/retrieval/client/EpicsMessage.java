@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.swing.plaf.basic.BasicBorders.FieldBorder;
-
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.GeneratedMessage;
@@ -205,5 +203,9 @@ public class EpicsMessage {
 		}
 		return ret;
 		
+	}
+
+	public void setTimestamp(Timestamp ts) {
+		this.ts = ts;
 	}
 }

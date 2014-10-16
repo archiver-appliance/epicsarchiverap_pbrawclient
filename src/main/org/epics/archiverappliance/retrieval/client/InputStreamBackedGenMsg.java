@@ -203,81 +203,82 @@ public class InputStreamBackedGenMsg implements GenMsgIterator {
 	}
 	
 	private void readLineAndParseNextMessage() throws IOException {
-		boolean processNextMsg = loopInfoLine();
-		if(!processNextMsg) { 
-			nextMsg = null;
-			return;
-		}
-		
-		ByteString byteString = ByteString.copyFrom(buf);
-		try { 
-			switch(info.getType()) { 
-			case SCALAR_BYTE: { 
-				nextMsg = new EpicsMessage(ScalarByte.parseFrom(byteString), info);
+		while(true) { 
+			boolean processNextMsg = loopInfoLine();
+			if(!processNextMsg) { 
+				nextMsg = null;
 				return;
 			}
-			case SCALAR_DOUBLE: { 
-				nextMsg = new EpicsMessage(ScalarDouble.parseFrom(byteString), info);
-				return;
+
+			ByteString byteString = ByteString.copyFrom(buf);
+			try { 
+				switch(info.getType()) { 
+				case SCALAR_BYTE: { 
+					nextMsg = new EpicsMessage(ScalarByte.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_DOUBLE: { 
+					nextMsg = new EpicsMessage(ScalarDouble.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_ENUM: { 
+					nextMsg = new EpicsMessage(ScalarEnum.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_FLOAT: { 
+					nextMsg = new EpicsMessage(ScalarFloat.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_INT: { 
+					nextMsg = new EpicsMessage(ScalarInt.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_SHORT: { 
+					nextMsg = new EpicsMessage(ScalarShort.parseFrom(byteString), info);
+					return;
+				}
+				case SCALAR_STRING: { 
+					nextMsg = new EpicsMessage(ScalarString.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_BYTE: { 
+					nextMsg = new EpicsMessage(VectorChar.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_DOUBLE: { 
+					nextMsg = new EpicsMessage(VectorDouble.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_ENUM: { 
+					nextMsg = new EpicsMessage(VectorEnum.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_FLOAT: { 
+					nextMsg = new EpicsMessage(VectorFloat.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_INT: { 
+					nextMsg = new EpicsMessage(VectorInt.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_SHORT: { 
+					nextMsg = new EpicsMessage(VectorShort.parseFrom(byteString), info);
+					return;
+				}
+				case WAVEFORM_STRING: { 
+					nextMsg = new EpicsMessage(VectorString.parseFrom(byteString), info);
+					return;
+				}
+				case V4_GENERIC_BYTES: { 
+					nextMsg = new EpicsMessage(V4GenericBytes.parseFrom(byteString), info);
+					return;
+				}
+				default:
+					throw new IOException("Unknown type " + info.getType());
+				}
+			} catch(InvalidProtocolBufferException ex) { 
+				logger.log(Level.WARNING, "Exception processing bytestring of size " + byteString.size() + " at position " + currentReadPointer + " with bytesRead " + bytesRead + " and filePos " + filePos, ex);
 			}
-			case SCALAR_ENUM: { 
-				nextMsg = new EpicsMessage(ScalarEnum.parseFrom(byteString), info);
-				return;
-			}
-			case SCALAR_FLOAT: { 
-				nextMsg = new EpicsMessage(ScalarFloat.parseFrom(byteString), info);
-				return;
-			}
-			case SCALAR_INT: { 
-				nextMsg = new EpicsMessage(ScalarInt.parseFrom(byteString), info);
-				return;
-			}
-			case SCALAR_SHORT: { 
-				nextMsg = new EpicsMessage(ScalarShort.parseFrom(byteString), info);
-				return;
-			}
-			case SCALAR_STRING: { 
-				nextMsg = new EpicsMessage(ScalarString.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_BYTE: { 
-				nextMsg = new EpicsMessage(VectorChar.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_DOUBLE: { 
-				nextMsg = new EpicsMessage(VectorDouble.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_ENUM: { 
-				nextMsg = new EpicsMessage(VectorEnum.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_FLOAT: { 
-				nextMsg = new EpicsMessage(VectorFloat.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_INT: { 
-				nextMsg = new EpicsMessage(VectorInt.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_SHORT: { 
-				nextMsg = new EpicsMessage(VectorShort.parseFrom(byteString), info);
-				return;
-			}
-			case WAVEFORM_STRING: { 
-				nextMsg = new EpicsMessage(VectorString.parseFrom(byteString), info);
-				return;
-			}
-			case V4_GENERIC_BYTES: { 
-				nextMsg = new EpicsMessage(V4GenericBytes.parseFrom(byteString), info);
-				return;
-			}
-			default:
-				throw new IOException("Unknown type " + info.getType());
-			}
-		} catch(InvalidProtocolBufferException ex) { 
-			logger.log(Level.WARNING, "Exception processing bytestring of size " + byteString.size() + " at position " + currentReadPointer + " with bytesRead " + bytesRead + " and filePos " + filePos, ex);
-			throw ex;
 		}
 	}
 

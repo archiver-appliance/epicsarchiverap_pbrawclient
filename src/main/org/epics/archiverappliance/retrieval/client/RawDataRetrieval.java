@@ -53,7 +53,7 @@ public class RawDataRetrieval implements DataRetrieval {
 		StringWriter buf = new StringWriter();
 		String encode = pvName;
 		try { 
-			URLEncoder.encode(pvName, "UTF-8");
+			pvName = URLEncoder.encode(pvName, "UTF-8");
 		} catch (UnsupportedEncodingException ex) { 
 			encode=pvName;
 		}		

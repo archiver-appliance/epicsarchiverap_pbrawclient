@@ -153,6 +153,60 @@ public class EpicsMessage {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public String getStringValue() throws IOException { 
+		String notSupportedMessage = "Conversion to string not supported yet";
+		switch(info.getType()) { 
+		case SCALAR_BYTE: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_DOUBLE: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_ENUM: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_FLOAT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_INT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_SHORT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case SCALAR_STRING: { 
+			return (String) message.getField(message.getDescriptorForType().findFieldByNumber(3));
+		}
+		case WAVEFORM_BYTE: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_DOUBLE: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_ENUM: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_FLOAT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_INT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_SHORT: { 
+			throw new IOException(notSupportedMessage);
+		}
+		case WAVEFORM_STRING: { 
+			return ((List<String>) message.getField(message.getDescriptorForType().findFieldByNumber(3))).get(0);
+		}
+		case V4_GENERIC_BYTES: { 
+			throw new IOException("Can't cast V4_GENERIC_BYTES to Number");
+		}
+		default:
+			throw new IOException("Unknown type " + info.getType());
+		}
+	}
+	
 	public GeneratedMessage getMessage() { 
 		return message;
 	}

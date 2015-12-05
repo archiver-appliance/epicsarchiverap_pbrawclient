@@ -1,6 +1,5 @@
 package org.epics.archiverappliance.retrieval.client;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class EpicsMessage {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Number getNumberValue() throws IOException { 
+	public Number getNumberValue() { 
 		switch(info.getType()) { 
 		case SCALAR_BYTE: { 
 			return ((ByteString) message.getField(message.getDescriptorForType().findFieldByNumber(3))).toByteArray()[0];
@@ -93,15 +92,15 @@ public class EpicsMessage {
 			return Double.parseDouble(((List<String>) message.getField(message.getDescriptorForType().findFieldByNumber(3))).get(0));
 		}
 		case V4_GENERIC_BYTES: { 
-			throw new IOException("Can't cast V4_GENERIC_BYTES to Number");
+			throw new UnsupportedOperationException("Can't cast V4_GENERIC_BYTES to Number");
 		}
 		default:
-			throw new IOException("Unknown type " + info.getType());
+			throw new UnsupportedOperationException("Unknown type " + info.getType());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Number getNumberAt(int index) throws IOException {  
+	public Number getNumberAt(int index) {  
 		switch(info.getType()) { 
 		case SCALAR_BYTE: { 
 			return ((ByteString) message.getField(message.getDescriptorForType().findFieldByNumber(3))).toByteArray()[0];
@@ -146,64 +145,64 @@ public class EpicsMessage {
 			return Double.parseDouble(((List<String>) message.getField(message.getDescriptorForType().findFieldByNumber(3))).get(index));
 		}
 		case V4_GENERIC_BYTES: { 
-			throw new IOException("Can't cast V4_GENERIC_BYTES to Number");
+			throw new UnsupportedOperationException("Can't cast V4_GENERIC_BYTES to Number");
 		}
 		default:
-			throw new IOException("Unknown type " + info.getType());
+			throw new UnsupportedOperationException("Unknown type " + info.getType());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public String getStringValue() throws IOException { 
+	public String getStringValue() { 
 		String notSupportedMessage = "Conversion to string not supported yet";
 		switch(info.getType()) { 
 		case SCALAR_BYTE: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_DOUBLE: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_ENUM: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_FLOAT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_INT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_SHORT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case SCALAR_STRING: { 
 			return (String) message.getField(message.getDescriptorForType().findFieldByNumber(3));
 		}
 		case WAVEFORM_BYTE: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_DOUBLE: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_ENUM: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_FLOAT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_INT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_SHORT: { 
-			throw new IOException(notSupportedMessage);
+			throw new UnsupportedOperationException(notSupportedMessage);
 		}
 		case WAVEFORM_STRING: { 
 			return ((List<String>) message.getField(message.getDescriptorForType().findFieldByNumber(3))).get(0);
 		}
 		case V4_GENERIC_BYTES: { 
-			throw new IOException("Can't cast V4_GENERIC_BYTES to Number");
+			throw new UnsupportedOperationException("Can't cast V4_GENERIC_BYTES to Number");
 		}
 		default:
-			throw new IOException("Unknown type " + info.getType());
+			throw new UnsupportedOperationException("Unknown type " + info.getType());
 		}
 	}
 	

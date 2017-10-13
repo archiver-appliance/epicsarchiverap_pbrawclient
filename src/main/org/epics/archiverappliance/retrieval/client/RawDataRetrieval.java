@@ -57,9 +57,13 @@ public class RawDataRetrieval implements DataRetrieval {
 		} catch (UnsupportedEncodingException ex) { 
 			encode=pvName;
 		}		
-		buf.append(accessURL)
-		.append("?pv=").append(encode)
-		.append("&from=").append(convertToUTC(startTime))
+		buf.append(accessURL);
+		if(accessURL.contains("?")) {
+			buf.append("&pv=").append(encode);	
+		} else {
+			buf.append("?pv=").append(encode);
+		}		
+		buf.append("&from=").append(convertToUTC(startTime))
 		.append("&to=").append(convertToUTC(endTime));
 		if(useReducedDataSet) {
 			buf.append("&usereduced=true");

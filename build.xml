@@ -11,7 +11,7 @@
     <description>The build file for the EPICS archiver appliance pbrawclient.</description>
 	
 	<property environment="env"/>
-	<property name="ver" value="0.0.4"/>
+	<property name="ver" value="0.0.7"/>
 	<property name="src" location="src/main"/>
 	<property name="classes" location="bin/"/>
 	<property name="stage" location="stage/"/>

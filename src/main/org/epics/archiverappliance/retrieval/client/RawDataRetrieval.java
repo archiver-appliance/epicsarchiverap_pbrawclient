@@ -16,13 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * Client side class for retrieving data from the appliance archiver using the PB over HTTP protocol.
@@ -98,9 +94,7 @@ public class RawDataRetrieval implements DataRetrieval {
 	
 	private static String convertToUTC(Timestamp time) {
 		try { 
-			Calendar c = GregorianCalendar.getInstance();
-			c.setTime(time);
-			return URLEncoder.encode(DatatypeConverter.printDateTime(c), "UTF-8");		
+			return URLEncoder.encode(time.toInstant().toString(), "UTF-8");		
 		} catch (UnsupportedEncodingException ex) {
 			logger.log(Level.SEVERE, "Cannot encode times into UTF-8", ex);
 			return null;

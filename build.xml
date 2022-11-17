@@ -11,7 +11,7 @@
     <description>The build file for the EPICS archiver appliance pbrawclient.</description>
 	
 	<property environment="env"/>
-	<property name="ver" value="0.0.9"/>
+	<property name="ver" value="0.0.10"/>
 	<property name="src" location="src/main"/>
 	<property name="classes" location="bin/"/>
 	<property name="stage" location="stage/"/>
@@ -60,36 +60,36 @@
     	<delete dir="${stage}"/>
     	<delete file="${dist}/pbrawclient-${ver}.jar"/>
     </target>
-	
+
 	<target name="test" depends="clientjar">
-	  <junit fork="yes" haltonfailure="true" printsummary="on" maxmemory="4096M">
-	    <batchtest fork="yes">
-	      <fileset dir="${test.dir}">
-	         <include name="**/*Test.java" />
-	         <include name="**/Test*.java" />
-	      </fileset>
-	    </batchtest>
-	  	<formatter type="brief" usefile="no" />
-	    <classpath>
-	    	<pathelement path="${classes}"/>
-	    	<pathelement path="."/>
-	        <fileset dir="lib">
-	          <include name="**/*.jar"/>
-	        </fileset>
-            <fileset dir="${tomcathome}/lib">
-              <include name="**/*.jar"/>
-            </fileset>
-            <fileset dir="${tomcathome}/bin">
-              <include name="**/*.jar"/>
-            </fileset>
-	        <fileset dir="lib/test">
-	          <include name="**/*.jar"/>
-	        </fileset>
-	    </classpath>
-	  	<assertions>
-	  	  <enable/>
-	  	</assertions>
-	  	<jvmarg value="-Dlog4j.configuration=log4j.properties"/>
-	  </junit>
+		<junit fork="yes" haltonfailure="true" printsummary="on" maxmemory="4096M">
+			<batchtest fork="yes">
+				<fileset dir="${test.dir}">
+					<include name="**/*Test.java" />
+					<include name="**/Test*.java" />
+				</fileset>
+			</batchtest>
+			<formatter type="brief" usefile="no" />
+			<classpath>
+				<pathelement path="${classes}"/>
+				<pathelement path="."/>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${tomcathome}/lib">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${tomcathome}/bin">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="lib/test">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<assertions>
+				<enable/>
+			</assertions>
+			<jvmarg value="-Dlog4j.configuration=log4j.properties"/>
+		</junit>
 	</target>
 </project>

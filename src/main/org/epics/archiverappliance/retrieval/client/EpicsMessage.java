@@ -10,6 +10,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.GeneratedMessage;
 
+import com.google.protobuf.GeneratedMessageV3;
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.FieldValue;
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
 
@@ -21,10 +22,10 @@ import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadInfo;
  *
  */
 public class EpicsMessage {
-	private GeneratedMessage message;
+	private GeneratedMessageV3 message;
 	private PayloadInfo info;
 	private Timestamp ts;
-	public EpicsMessage(GeneratedMessage message, PayloadInfo info) { 
+	public EpicsMessage(GeneratedMessageV3 message, PayloadInfo info) {
 		this.message = message;
 		this.info = info;
 		int secondsIntoYear = (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(1));
@@ -206,7 +207,7 @@ public class EpicsMessage {
 		}
 	}
 	
-	public GeneratedMessage getMessage() { 
+	public GeneratedMessageV3 getMessage() {
 		return message;
 	}
 	

@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/test"/>
-	<classpathentry kind="lib" path="lib/protobuf-java-2.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf-java-3.21.9.jar"/>
 	<classpathentry kind="lib" path="lib/test/junit-4.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>

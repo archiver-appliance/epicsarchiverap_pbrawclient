@@ -9,5 +9,5 @@ import edu.stanford.slac.archiverappliance.PB.EPICSEvent;
  *
  */
 public interface InfoChangeHandler {
-    public void handleInfoChange(EPICSEvent.PayloadInfo info);
+    void handleInfoChange(EPICSEvent.PayloadInfo info);
 }

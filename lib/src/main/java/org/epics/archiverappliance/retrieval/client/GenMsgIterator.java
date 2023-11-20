@@ -9,7 +9,7 @@ import java.io.Closeable;
  *
  */
 public interface GenMsgIterator extends Iterable<EpicsMessage>, Closeable {
-    public EPICSEvent.PayloadInfo getPayLoadInfo();
+    EPICSEvent.PayloadInfo getPayLoadInfo();
 
-    public void onInfoChange(InfoChangeHandler handler);
+    void onInfoChange(InfoChangeHandler handler);
 }

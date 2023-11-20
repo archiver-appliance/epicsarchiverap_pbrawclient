@@ -58,17 +58,11 @@ public class EpicsMessage {
             case SCALAR_DOUBLE -> {
                 return (Double) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
-            case SCALAR_ENUM -> {
+            case SCALAR_ENUM, SCALAR_INT, SCALAR_SHORT -> {
                 return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
             case SCALAR_FLOAT -> {
                 return (Float) message.getField(message.getDescriptorForType().findFieldByNumber(3));
-            }
-            case SCALAR_INT -> {
-                return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
-            }
-            case SCALAR_SHORT -> {
-                return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
             case SCALAR_STRING -> {
                 return Double.parseDouble(
@@ -127,17 +121,11 @@ public class EpicsMessage {
             case SCALAR_DOUBLE -> {
                 return (Double) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
-            case SCALAR_ENUM -> {
+            case SCALAR_ENUM, SCALAR_SHORT, SCALAR_INT -> {
                 return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
             case SCALAR_FLOAT -> {
                 return (Float) message.getField(message.getDescriptorForType().findFieldByNumber(3));
-            }
-            case SCALAR_INT -> {
-                return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
-            }
-            case SCALAR_SHORT -> {
-                return (Integer) message.getField(message.getDescriptorForType().findFieldByNumber(3));
             }
             case SCALAR_STRING -> {
                 return Double.parseDouble(
@@ -153,23 +141,13 @@ public class EpicsMessage {
                                 message.getField(message.getDescriptorForType().findFieldByNumber(3)))
                         .get(index);
             }
-            case WAVEFORM_ENUM -> {
+            case WAVEFORM_ENUM, WAVEFORM_INT, WAVEFORM_SHORT -> {
                 return ((List<Integer>)
                                 message.getField(message.getDescriptorForType().findFieldByNumber(3)))
                         .get(index);
             }
             case WAVEFORM_FLOAT -> {
                 return ((List<Float>)
-                                message.getField(message.getDescriptorForType().findFieldByNumber(3)))
-                        .get(index);
-            }
-            case WAVEFORM_INT -> {
-                return ((List<Integer>)
-                                message.getField(message.getDescriptorForType().findFieldByNumber(3)))
-                        .get(index);
-            }
-            case WAVEFORM_SHORT -> {
-                return ((List<Integer>)
                                 message.getField(message.getDescriptorForType().findFieldByNumber(3)))
                         .get(index);
             }
@@ -189,44 +167,22 @@ public class EpicsMessage {
     public String getStringValue() {
         String notSupportedMessage = "Conversion to string not supported yet";
         switch (info.getType()) {
-            case SCALAR_BYTE -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case SCALAR_DOUBLE -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case SCALAR_ENUM -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case SCALAR_FLOAT -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case SCALAR_INT -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case SCALAR_SHORT -> {
+            case SCALAR_BYTE,
+                    SCALAR_SHORT,
+                    SCALAR_INT,
+                    SCALAR_FLOAT,
+                    SCALAR_ENUM,
+                    SCALAR_DOUBLE,
+                    WAVEFORM_BYTE,
+                    WAVEFORM_DOUBLE,
+                    WAVEFORM_ENUM,
+                    WAVEFORM_FLOAT,
+                    WAVEFORM_INT,
+                    WAVEFORM_SHORT -> {
                 throw new UnsupportedOperationException(notSupportedMessage);
             }
             case SCALAR_STRING -> {
                 return (String) message.getField(message.getDescriptorForType().findFieldByNumber(3));
-            }
-            case WAVEFORM_BYTE -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case WAVEFORM_DOUBLE -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case WAVEFORM_ENUM -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case WAVEFORM_FLOAT -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case WAVEFORM_INT -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
-            }
-            case WAVEFORM_SHORT -> {
-                throw new UnsupportedOperationException(notSupportedMessage);
             }
             case WAVEFORM_STRING -> {
                 return ((List<String>)

@@ -8,7 +8,9 @@
 package org.epics.archiverappliance.retrieval.client;
 
 import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.hc.client5.http.fluent.Request;
+import java.net.http.HttpClient;
+import java.net.http.HttpClient.Redirect;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 /**
  * Client side class for retrieving data from the appliance archiver using the PB over HTTP protocol.
@@ -27,9 +33,13 @@ import org.apache.hc.client5.http.fluent.Request;
 public class RawDataRetrieval extends DataRetrieval {
     private static final Logger logger = Logger.getLogger(RawDataRetrieval.class.getName());
     private final String accessURL;
+    private HttpClient theClient;
 
     public RawDataRetrieval(String accessURL) {
         this.accessURL = accessURL;
+        this.theClient = HttpClient.newBuilder()
+            .followRedirects(Redirect.NORMAL)
+            .build();
     }
 
     private static String convertToUTC(Timestamp time) {
@@ -69,15 +79,15 @@ public class RawDataRetrieval extends DataRetrieval {
             });
         }
         String getURL = buf.toString();
-        logger.info("URL to fetch data is " + getURL);
+        logger.info("URL to fetch data is " + getURL);        
         try {
-            URL url = new URL(getURL);
-            var data = Request.get(url.toURI()).execute().returnContent();
-
-            BufferedInputStream is = new BufferedInputStream(data.asStream());
-
-            if (is.available() <= 0) return null;
-            return new InputStreamBackedGenMsg(is);
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(getURL)).build();
+            HttpResponse<InputStream> response = this.theClient.send(request, BodyHandlers.ofInputStream());
+            if(response.statusCode() != 200) {
+                logger.warning("Invalid status code from server " + response.statusCode() + " when fetching data from " + getURL);
+                return null;
+            }
+            return new InputStreamBackedGenMsg(response.body());
 
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "Exception fetching data from URL " + getURL, ex);

@@ -15,7 +15,7 @@ plugins {
     id("maven-publish")
 }
 
-version = '0.1.1'
+version = '0.0.11'
 
 java {
     toolchain {
@@ -48,12 +48,7 @@ publishing {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api 'org.apache.commons:commons-math3:3.6.1'
     api 'com.google.protobuf:protobuf-java:3.23.0'
-    api 'org.apache.httpcomponents.client5:httpclient5-fluent:5.2.1'
-
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation 'com.google.guava:guava:31.1-jre'
 }
 
 protobuf {
@@ -102,10 +97,11 @@ spotless {
 }
 
 
-tasks.named('jar') {
+jar {
     manifest {
         attributes('Implementation-Title': project.name,
                 'Implementation-Version': project.version)
     }
+    archiveBaseName = 'pbrawclient'
 }
 

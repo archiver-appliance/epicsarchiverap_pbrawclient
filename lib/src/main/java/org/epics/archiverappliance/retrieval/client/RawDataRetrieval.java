@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ import org.apache.hc.client5.http.fluent.Request;
  *
  * @author mshankar
  */
-public class RawDataRetrieval implements DataRetrieval {
+public class RawDataRetrieval extends DataRetrieval {
     private static final Logger logger = Logger.getLogger(RawDataRetrieval.class.getName());
     private final String accessURL;
 
@@ -36,31 +37,24 @@ public class RawDataRetrieval implements DataRetrieval {
     }
 
     @Override
-    public GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime) {
-        return getDataForPV(pvName, startTime, endTime, false, null);
-    }
-
-    @Override
-    public GenMsgIterator getDataForPV(
-            String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet) {
-        return getDataForPV(pvName, startTime, endTime, useReducedDataSet, null);
-    }
-
-    @Override
-    public GenMsgIterator getDataForPV(
-            String pvName,
+    public final GenMsgIterator getDataForPVs(
+            List<String> pvNames,
             Timestamp startTime,
             Timestamp endTime,
             boolean useReducedDataSet,
             Map<String, String> otherParams) {
         // We'll use java.net for now.
         StringWriter buf = new StringWriter();
-        String encode = URLEncoder.encode(pvName, StandardCharsets.UTF_8);
         buf.append(accessURL);
+        // If the access url has no query parameters then start new query, else append to existing
+        var first_encoded = URLEncoder.encode(pvNames.get(0), StandardCharsets.UTF_8);
         if (accessURL.contains("?")) {
-            buf.append("&pv=").append(encode);
+            buf.append("&pv=").append(first_encoded);
         } else {
-            buf.append("?pv=").append(encode);
+            buf.append("?pv=").append(first_encoded);
+        }
+        for (var pvName: pvNames) {
+            buf.append("&pv=").append(URLEncoder.encode(pvName, StandardCharsets.UTF_8));
         }
         buf.append("&from=").append(convertToUTC(startTime)).append("&to=").append(convertToUTC(endTime));
         if (useReducedDataSet) {

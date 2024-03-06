@@ -53,7 +53,7 @@ public class RawDataRetrieval extends DataRetrieval {
         } else {
             buf.append("?pv=").append(first_encoded);
         }
-        for (var pvName: pvNames) {
+        for (var pvName : pvNames) {
             buf.append("&pv=").append(URLEncoder.encode(pvName, StandardCharsets.UTF_8));
         }
         buf.append("&from=").append(convertToUTC(startTime)).append("&to=").append(convertToUTC(endTime));

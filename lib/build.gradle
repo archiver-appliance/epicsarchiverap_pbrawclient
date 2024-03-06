@@ -85,6 +85,10 @@ java {
 
 spotless {
     java {
+        target project.fileTree(project.rootDir) {
+                include '**/*.java'
+                exclude 'build/**/*.*'
+            }
         // don't need to set target, it is inferred from java
         // apply a specific flavor of google-java-format
         palantirJavaFormat()

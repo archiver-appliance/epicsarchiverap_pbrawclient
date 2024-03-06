@@ -26,7 +26,8 @@ public abstract class DataRetrieval {
      */
     public final GenMsgIterator getDataForPV(String pvName, Timestamp startTime, Timestamp endTime) {
         return getDataForPV(pvName, startTime, endTime, false);
-    };
+    }
+    ;
     /**
      * Get data for PV pvName from starttime to endtime using the system defined sparsification operator.
      * @param pvName The name of the pv
@@ -37,8 +38,8 @@ public abstract class DataRetrieval {
      */
     public final GenMsgIterator getDataForPV(
             String pvName, Timestamp startTime, Timestamp endTime, boolean useReducedDataSet) {
-                return getDataForPV(pvName, startTime, endTime, useReducedDataSet, null);
-            }
+        return getDataForPV(pvName, startTime, endTime, useReducedDataSet, null);
+    }
 
     /**
      * Get data for PV pvName from starttime to endtime using the system defined sparsification operator; pass additional params in the HTTP call.
@@ -55,14 +56,14 @@ public abstract class DataRetrieval {
             Timestamp endTime,
             boolean useReducedDataSet,
             Map<String, String> otherParams) {
-                return getDataForPVs(Collections.singletonList(pvName), startTime, endTime, useReducedDataSet, otherParams);
-            }
+        return getDataForPVs(Collections.singletonList(pvName), startTime, endTime, useReducedDataSet, otherParams);
+    }
 
     /**
      * Get data for PVs in pvNames from starttime to endtime using the system defined sparsification operator; pass additional params in the HTTP call.
-     * NOTE: The data for all the PVs will be concatenated together. To identify which PV is currently being read, you must register your own 
+     * NOTE: The data for all the PVs will be concatenated together. To identify which PV is currently being read, you must register your own
      * {@code InfoChangeHandler} to the returned {@code GenMsgIterator} using {@code onInfoChange}.
-     * @param pvName The name of the pv
+     * @param pvNames The names of the pvs
      * @param startTime Start time of request
      * @param endTime End time of request
      * @param useReducedDataSet - If true, use the server defined sparsification operator...

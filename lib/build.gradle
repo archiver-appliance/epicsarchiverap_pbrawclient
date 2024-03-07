@@ -34,8 +34,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/archiver-appliance/epicsarchiverap_pbrawclient")
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }

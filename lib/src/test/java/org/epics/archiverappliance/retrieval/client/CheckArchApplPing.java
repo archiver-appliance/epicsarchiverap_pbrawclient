@@ -8,7 +8,7 @@ public class CheckArchApplPing {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        String serverURL = "http://cdlx27.slac.stanford.edu:17665/retrieval";
+        String serverURL = "http://localhost:17665/retrieval";
         if (args.length > 1) {
             serverURL = args[0];
         }

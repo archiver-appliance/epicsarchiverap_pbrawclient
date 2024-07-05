@@ -60,7 +60,7 @@ public class RawDataRetrieval extends DataRetrieval {
         } else {
             buf.append("?pv=").append(first_encoded);
         }
-        for (var pvName : pvNames) {
+        for (var pvName : pvNames.subList(1, pvNames.size())) {
             buf.append("&pv=").append(URLEncoder.encode(pvName, StandardCharsets.UTF_8));
         }
         buf.append("&from=").append(convertToUTC(startTime)).append("&to=").append(convertToUTC(endTime));
@@ -87,10 +87,6 @@ public class RawDataRetrieval extends DataRetrieval {
                 return null;
             }
             InputStream is = response.body();
-            if (is.available() <= 0) {
-                logger.warning("Empty response from server when fetching data from " + getURL);
-                return null;
-            }
             return new InputStreamBackedGenMsg(is);
 
         } catch (Exception ex) {

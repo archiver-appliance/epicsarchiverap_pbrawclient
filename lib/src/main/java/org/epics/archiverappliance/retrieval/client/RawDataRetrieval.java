@@ -87,10 +87,6 @@ public class RawDataRetrieval extends DataRetrieval {
                 return null;
             }
             InputStream is = response.body();
-            if (is.available() <= 0) {
-                logger.warning("Empty response from server when fetching data from " + getURL);
-                return null;
-            }
             return new InputStreamBackedGenMsg(is);
 
         } catch (Exception ex) {

@@ -32,3 +32,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           arguments: build
+      - name: Upload jar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: default-package
+          path: lib/build/libs/pbrawclient-*.jar

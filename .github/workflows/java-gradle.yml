@@ -28,7 +28,6 @@ jobs:
         with:
           arguments: build
       - name: Upload jar
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: default-package

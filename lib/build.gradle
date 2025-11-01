@@ -10,12 +10,12 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id("java-library")
-    id("com.google.protobuf") version "0.9.3"
+    id("com.google.protobuf") version "0.9.5"
     id("com.diffplug.spotless") version "6.22.0"
     id("maven-publish")
 }
 
-version = '0.2.1'
+version = '0.2.2-SNAPSHOT'
 
 java {
     toolchain {
@@ -48,14 +48,14 @@ publishing {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api 'com.google.protobuf:protobuf-java:3.23.0'
+    api 'com.google.protobuf:protobuf-java:4.33.0'
 }
 
 protobuf {
     // Configure the protoc executable
     protoc {
         // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.23.0'
+        artifact = 'com.google.protobuf:protoc:4.33.0'
     }
 }
 

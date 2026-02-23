@@ -1,12 +1,15 @@
+target/
+**/target/
 
-# Ignore Gradle project-specific cache directory
-.gradle
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.settings/
+.project
+.classpath
+.factorypath
 
-
-# Ignore Gradle build output directory
-build
-lib/build
-lib/bin
-.idea
-
+# OS
 .DS_Store

@@ -1,6 +1,9 @@
 target/
 **/target/
 
+# Leftover state from maven-release-plugin runs
+release.properties
+
 # IDEs
 .idea/
 *.iml

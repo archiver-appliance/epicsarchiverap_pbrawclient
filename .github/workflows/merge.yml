@@ -1,0 +1,13 @@
+name: Merge to master
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    uses: ./.github/workflows/_test.yml

@@ -11,3 +11,12 @@ permissions:
 jobs:
   test:
     uses: ./.github/workflows/_test.yml
+  deploy-snapshot:
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/_deploy.yml
+    secrets: inherit
+    with:
+      maven-args: deploy -DskipTests

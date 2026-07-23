@@ -4,6 +4,10 @@ target/
 # Leftover state from maven-release-plugin runs
 release.properties
 
+# Local Maven credentials (Sonatype user token) — never commit
+.settings.xml
+settings.xml
+
 # IDEs
 .idea/
 *.iml

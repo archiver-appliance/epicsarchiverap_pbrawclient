@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    uses: ./.github/workflows/_test.yml
+
+  publish-central:
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/_deploy.yml
+    secrets: inherit
+    with:
+      version: ${{ github.ref_name }}
+      sign: true
+      maven-args: deploy -P releases -DskipTests
+
+  publish-github-packages:
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/_deploy.yml
+    secrets: inherit
+    with:
+      version: ${{ github.ref_name }}
+      maven-args: deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
+
+  github-release:
+    needs: [publish-central, publish-github-packages]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Java
+        uses: ./.github/actions/setup-java
+      - name: Build release jars
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          mvn --batch-mode versions:set -DnewVersion="${VERSION#v}" -DgenerateBackupPoms=false
+          mvn --batch-mode package -DskipTests
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: target/pbrawclient-*.jar
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}

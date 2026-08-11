@@ -17,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 /**
  * Test retrieval for single PVs
@@ -25,145 +28,71 @@ import org.junit.jupiter.api.Test;
  */
 public class SinglePVRetrievalTest {
 
+    private static final String SAMPLE_DATA_DIR = "src/test/resources/sampledata/";
+
     /**
-     * singleFileWithWellKnownPoints file with one data point per day for 2012. All data points are for 09:43:37 UTC.
-     * @throws Exception
+     * The same day's worth of data laid out three different ways in the stream; one data point per day
+     * for 2012, all at 09:43:37 UTC.
      */
-    @Test
-    void testSingleFileWithWellKnownPoints() throws Exception {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/singleFileWithWellKnownPoints");
-                InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
-            int eventCount = 0;
-            Timestamp previousTs = new Timestamp(0);
-            TimeZone timeZone = TimeZone.getTimeZone("UTC");
-            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-            Calendar expectedTime = Calendar.getInstance(timeZone);
-            expectedTime.set(2012, 0, 1, 9, 43, 37);
-            expectedTime.set(Calendar.MILLISECOND, 0);
-            for (EpicsMessage msg : is) {
-                Calendar actualTime = Calendar.getInstance(timeZone);
-                Timestamp ts = msg.getTimestamp();
-                assertTrue(
-                        ts.getTime() >= previousTs.getTime(),
-                        "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime());
-                actualTime.setTimeInMillis(ts.getTime());
-                assertEquals(
-                        0,
-                        expectedTime.compareTo(actualTime),
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount);
-                previousTs = ts;
-                expectedTime.add(Calendar.HOUR, 24);
-                eventCount++;
-            }
-            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
-        }
+    @ParameterizedTest(name = "{0}")
+    @CsvSource({
+        "singleFileWithWellKnownPoints, 366",
+        "multipleChunksInSameYear, 366",
+        "multipleChunksOfRandomSizeInSameYear, 366",
+    })
+    void chunkLayouts(String fixture, int expectedEventCount) throws Exception {
+        assertSampleFile(fixture, expectedEventCount, utc(2012, 0, 1, 9, 43, 37), Calendar.HOUR, 24);
     }
 
     /**
-     * Test file with one data point per day for 2012; however, there is a header after each datapoint. All data points are for 09:43:37 UTC
-     * @throws Exception
+     * A file with some data points for 2012 for each DBR type. All data points are for 09:43:37 UTC.
      */
-    @Test
-    void testMultipleChunksInSameYear() throws Exception {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/multipleChunksInSameYear");
-                InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
-            int eventCount = 0;
-            Timestamp previousTs = new Timestamp(0);
-            TimeZone timeZone = TimeZone.getTimeZone("UTC");
-            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-            Calendar expectedTime = Calendar.getInstance(timeZone);
-            expectedTime.set(2012, 0, 1, 9, 43, 37);
-            expectedTime.set(Calendar.MILLISECOND, 0);
-            for (EpicsMessage msg : is) {
-                Calendar actualTime = Calendar.getInstance(timeZone);
-                Timestamp ts = msg.getTimestamp();
-                assertTrue(
-                        ts.getTime() >= previousTs.getTime(),
-                        "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime());
-                actualTime.setTimeInMillis(ts.getTime());
-                assertEquals(
-                        0,
-                        expectedTime.compareTo(actualTime),
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount);
-                previousTs = ts;
-                expectedTime.add(Calendar.HOUR, 24);
-                eventCount++;
-            }
-            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
-        }
+    @ParameterizedTest(name = "{0}")
+    @EnumSource(PayloadType.class)
+    void filesForDBRTypes(PayloadType payloadType) throws Exception {
+        int expectedEventCount = payloadType.getNumber() >= 7 ? 2 : 366;
+        assertSampleFile(
+                payloadType + "_sampledata", expectedEventCount, utc(2012, 0, 1, 9, 43, 37), Calendar.HOUR, 24);
     }
 
     /**
-     * Test file with one data point per day for 2012; this is broken down into chunks of random sizes All data points are for 09:43:37 UTC.
-     * @throws Exception
+     * Test a days worth of data.
      */
     @Test
-    void testMultipleChunksOfRandomSizeInSameYear() throws Exception {
-        try (FileInputStream fis =
-                        new FileInputStream("src/test/resources/sampledata/multipleChunksOfRandomSizeInSameYear");
-                InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
-            int eventCount = 0;
-            Timestamp previousTs = new Timestamp(0);
-            TimeZone timeZone = TimeZone.getTimeZone("UTC");
-            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-            Calendar expectedTime = Calendar.getInstance(timeZone);
-            expectedTime.set(2012, 0, 1, 9, 43, 37);
-            expectedTime.set(Calendar.MILLISECOND, 0);
-            for (EpicsMessage msg : is) {
-                Calendar actualTime = Calendar.getInstance(timeZone);
-                Timestamp ts = msg.getTimestamp();
-                assertTrue(
-                        ts.getTime() >= previousTs.getTime(),
-                        "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime());
-                actualTime.setTimeInMillis(ts.getTime());
-                assertEquals(
-                        0,
-                        expectedTime.compareTo(actualTime),
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount);
-                previousTs = ts;
-                expectedTime.add(Calendar.HOUR, 24);
-                eventCount++;
-            }
-            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
-        }
+    void oneDaysWorthOfDBRDoubleData() throws Exception {
+        assertSampleFile("onedaysdbrdouble", 86400, utc(2011, 1, 1, 0, 0, 0), Calendar.SECOND, 1);
     }
 
     /**
-     * Test file with one data point per day from 1970-1970+2000.
-     * @throws Exception
+     * Test file with one data point per day from 1970-1970+2000. Kept separate from the other fixtures as the
+     * expected time restarts at the top of each year rather than advancing continuously.
      */
     @Test
-    void testMultipleChunksInMultipleYears() throws Exception {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/multipleChunksInMultipleYears");
+    void multipleChunksInMultipleYears() throws Exception {
+        try (FileInputStream fis = new FileInputStream(SAMPLE_DATA_DIR + "multipleChunksInMultipleYears");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCountInYear = 0;
             int totalEventCount = 0;
             Timestamp previousTs = new Timestamp(0);
             TimeZone timeZone = TimeZone.getTimeZone("UTC");
             SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-            Calendar expectedTime = Calendar.getInstance(timeZone);
-            int year = 1970;
-            expectedTime.set(year++, 0, 1, 9, 43, 37);
-            expectedTime.set(Calendar.MILLISECOND, 0);
+            Calendar expectedTime = utc(1970, 0, 1, 9, 43, 37);
+            int year = 1971;
             for (EpicsMessage msg : is) {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
-                assertTrue(
-                        ts.getTime() >= previousTs.getTime(),
-                        "Not monotonically increasing timestamps at event " + eventCountInYear + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime());
+                Timestamp previous = previousTs;
+                int eventIndex = eventCountInYear;
                 actualTime.setTimeInMillis(ts.getTime());
+                assertTrue(
+                        ts.getTime() >= previous.getTime(),
+                        () -> "Not monotonically increasing timestamps at event " + eventIndex + " time " + ts.getTime()
+                                + " and previous " + previous.getTime());
                 assertEquals(
                         0,
                         expectedTime.compareTo(actualTime),
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCountInYear);
+                        () -> "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventIndex);
                 previousTs = ts;
                 expectedTime.add(Calendar.HOUR, 24);
                 eventCountInYear++;
@@ -175,92 +104,61 @@ public class SinglePVRetrievalTest {
                 }
             }
             assertEquals(
-                    365 * 2000, totalEventCount, "Event count is not what we expect. We got " + totalEventCount);
+                    365 * 2000,
+                    totalEventCount,
+                    "Event count is not what we expect. We got " + totalEventCount);
         }
     }
 
     /**
-     * Test file with some data points for 2012 for each DBR type. All data points are for 09:43:37 UTC.
-     * @throws Exception
+     * Walk a sample file, checking that timestamps increase monotonically and land on the expected time, and that
+     * the file holds the expected number of events.
+     *
+     * @param fixture Name of the file under the sample data directory
+     * @param expectedEventCount Number of events the file is expected to hold
+     * @param expectedTime Time of the first event; advanced by stepAmount/stepField for each subsequent event
+     * @param stepField The {@code Calendar} field the expected time advances by
+     * @param stepAmount How much stepField advances by for each event
      */
-    @Test
-    void testFilesForDBRTypes() throws Exception {
-        for (PayloadType payloadType : PayloadType.values()) {
-            try (FileInputStream fis =
-                            new FileInputStream("src/test/resources/sampledata/" + payloadType + "_sampledata");
-                    InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
-                int eventCount = 0;
-                int expectedEventCount = 366;
-                if (payloadType.getNumber() >= 7) expectedEventCount = 2;
-                Timestamp previousTs = new Timestamp(0);
-                TimeZone timeZone = TimeZone.getTimeZone("UTC");
-                SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-                Calendar expectedTime = Calendar.getInstance(timeZone);
-                expectedTime.set(2012, 0, 1, 9, 43, 37);
-                expectedTime.set(Calendar.MILLISECOND, 0);
-                for (EpicsMessage msg : is) {
-                    Calendar actualTime = Calendar.getInstance(timeZone);
-                    Timestamp ts = msg.getTimestamp();
-                    assertTrue(
-                            ts.getTime() >= previousTs.getTime(),
-                            "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                    + " and previous " + previousTs.getTime());
-                    actualTime.setTimeInMillis(ts.getTime());
-                    assertEquals(
-                            0,
-                            expectedTime.compareTo(actualTime),
-                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                    + format.format(actualTime.getTime()) + " at event " + eventCount);
-                    previousTs = ts;
-                    expectedTime.add(Calendar.HOUR, 24);
-                    eventCount++;
-                }
-                assertEquals(
-                        expectedEventCount,
-                        eventCount,
-                        "Event count is not what we expect. We got " + eventCount + " for " + payloadType);
-            }
-        }
-    }
-
-    /**
-     * Test a days worth of data.
-     * @throws Exception
-     */
-    @Test
-    void testOneDaysWorthOfDBRDoubleData() throws Exception {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/onedaysdbrdouble");
+    private void assertSampleFile(
+            String fixture, int expectedEventCount, Calendar expectedTime, int stepField, int stepAmount)
+            throws Exception {
+        try (FileInputStream fis = new FileInputStream(SAMPLE_DATA_DIR + fixture);
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCount = 0;
             Timestamp previousTs = new Timestamp(0);
             TimeZone timeZone = TimeZone.getTimeZone("UTC");
             SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSS Z");
-            Calendar expectedTime = Calendar.getInstance(timeZone);
-            expectedTime.set(2011, 1, 1, 0, 0, 0);
-            expectedTime.set(Calendar.MILLISECOND, 0);
-            long startMillis = System.currentTimeMillis();
             for (EpicsMessage msg : is) {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
-                assertTrue(
-                        ts.getTime() >= previousTs.getTime(),
-                        "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime());
+                Timestamp previous = previousTs;
+                int eventIndex = eventCount;
                 actualTime.setTimeInMillis(ts.getTime());
-                if (expectedTime.compareTo(actualTime) != 0) {
-                    assertEquals(
-                            0,
-                            expectedTime.compareTo(actualTime),
-                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                    + format.format(actualTime.getTime()) + " at event " + eventCount);
-                }
+                assertTrue(
+                        ts.getTime() >= previous.getTime(),
+                        () -> "Not monotonically increasing timestamps at event " + eventIndex + " time " + ts.getTime()
+                                + " and previous " + previous.getTime());
+                assertEquals(
+                        0,
+                        expectedTime.compareTo(actualTime),
+                        () -> "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventIndex);
                 previousTs = ts;
-                expectedTime.add(Calendar.SECOND, 1);
+                expectedTime.add(stepField, stepAmount);
                 eventCount++;
             }
-            assertEquals(86400, eventCount, "Event count is not what we expect. We got " + eventCount);
-            long endMillis = System.currentTimeMillis();
-            System.err.println("Time taken to process on days worth of data is " + (endMillis - startMillis) + "(ms)");
+            assertEquals(
+                    expectedEventCount,
+                    eventCount,
+                    "Event count is not what we expect. We got " + eventCount + " for " + fixture);
         }
+    }
+
+    private static Calendar utc(int year, int month, int day, int hour, int minute, int second) {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        cal.set(year, month, day, hour, minute, second);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal;
     }
 }

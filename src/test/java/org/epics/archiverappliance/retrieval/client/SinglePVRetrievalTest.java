@@ -7,8 +7,8 @@
  *******************************************************************************/
 package org.epics.archiverappliance.retrieval.client;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.stanford.slac.archiverappliance.PB.EPICSEvent.PayloadType;
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test retrieval for single PVs
@@ -30,7 +30,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testSingleFileWithWellKnownPoints() throws Exception {
+    void testSingleFileWithWellKnownPoints() throws Exception {
         try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/singleFileWithWellKnownPoints");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCount = 0;
@@ -44,20 +44,20 @@ public class SinglePVRetrievalTest {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
                 assertTrue(
+                        ts.getTime() >= previousTs.getTime(),
                         "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime(),
-                        ts.getTime() >= previousTs.getTime());
+                                + " and previous " + previousTs.getTime());
                 actualTime.setTimeInMillis(ts.getTime());
                 assertEquals(
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount,
                         0,
-                        expectedTime.compareTo(actualTime));
+                        expectedTime.compareTo(actualTime),
+                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventCount);
                 previousTs = ts;
                 expectedTime.add(Calendar.HOUR, 24);
                 eventCount++;
             }
-            assertEquals("Event count is not what we expect. We got " + eventCount, 366, eventCount);
+            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
         }
     }
 
@@ -66,7 +66,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testMultipleChunksInSameYear() throws Exception {
+    void testMultipleChunksInSameYear() throws Exception {
         try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/multipleChunksInSameYear");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCount = 0;
@@ -80,20 +80,20 @@ public class SinglePVRetrievalTest {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
                 assertTrue(
+                        ts.getTime() >= previousTs.getTime(),
                         "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime(),
-                        ts.getTime() >= previousTs.getTime());
+                                + " and previous " + previousTs.getTime());
                 actualTime.setTimeInMillis(ts.getTime());
                 assertEquals(
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount,
                         0,
-                        expectedTime.compareTo(actualTime));
+                        expectedTime.compareTo(actualTime),
+                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventCount);
                 previousTs = ts;
                 expectedTime.add(Calendar.HOUR, 24);
                 eventCount++;
             }
-            assertEquals("Event count is not what we expect. We got " + eventCount, 366, eventCount);
+            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
         }
     }
 
@@ -102,7 +102,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testMultipleChunksOfRandomSizeInSameYear() throws Exception {
+    void testMultipleChunksOfRandomSizeInSameYear() throws Exception {
         try (FileInputStream fis =
                         new FileInputStream("src/test/resources/sampledata/multipleChunksOfRandomSizeInSameYear");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
@@ -117,20 +117,20 @@ public class SinglePVRetrievalTest {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
                 assertTrue(
+                        ts.getTime() >= previousTs.getTime(),
                         "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime(),
-                        ts.getTime() >= previousTs.getTime());
+                                + " and previous " + previousTs.getTime());
                 actualTime.setTimeInMillis(ts.getTime());
                 assertEquals(
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCount,
                         0,
-                        expectedTime.compareTo(actualTime));
+                        expectedTime.compareTo(actualTime),
+                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventCount);
                 previousTs = ts;
                 expectedTime.add(Calendar.HOUR, 24);
                 eventCount++;
             }
-            assertEquals("Event count is not what we expect. We got " + eventCount, 366, eventCount);
+            assertEquals(366, eventCount, "Event count is not what we expect. We got " + eventCount);
         }
     }
 
@@ -139,7 +139,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testMultipleChunksInMultipleYears() throws Exception {
+    void testMultipleChunksInMultipleYears() throws Exception {
         try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/multipleChunksInMultipleYears");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCountInYear = 0;
@@ -155,15 +155,15 @@ public class SinglePVRetrievalTest {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
                 assertTrue(
+                        ts.getTime() >= previousTs.getTime(),
                         "Not monotonically increasing timestamps at event " + eventCountInYear + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime(),
-                        ts.getTime() >= previousTs.getTime());
+                                + " and previous " + previousTs.getTime());
                 actualTime.setTimeInMillis(ts.getTime());
                 assertEquals(
-                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                + format.format(actualTime.getTime()) + " at event " + eventCountInYear,
                         0,
-                        expectedTime.compareTo(actualTime));
+                        expectedTime.compareTo(actualTime),
+                        "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                + format.format(actualTime.getTime()) + " at event " + eventCountInYear);
                 previousTs = ts;
                 expectedTime.add(Calendar.HOUR, 24);
                 eventCountInYear++;
@@ -174,7 +174,8 @@ public class SinglePVRetrievalTest {
                     expectedTime.set(Calendar.MILLISECOND, 0);
                 }
             }
-            assertEquals("Event count is not what we expect. We got " + totalEventCount, 365 * 2000, totalEventCount);
+            assertEquals(
+                    365 * 2000, totalEventCount, "Event count is not what we expect. We got " + totalEventCount);
         }
     }
 
@@ -183,7 +184,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testFilesForDBRTypes() throws Exception {
+    void testFilesForDBRTypes() throws Exception {
         for (PayloadType payloadType : PayloadType.values()) {
             try (FileInputStream fis =
                             new FileInputStream("src/test/resources/sampledata/" + payloadType + "_sampledata");
@@ -201,23 +202,23 @@ public class SinglePVRetrievalTest {
                     Calendar actualTime = Calendar.getInstance(timeZone);
                     Timestamp ts = msg.getTimestamp();
                     assertTrue(
+                            ts.getTime() >= previousTs.getTime(),
                             "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                    + " and previous " + previousTs.getTime(),
-                            ts.getTime() >= previousTs.getTime());
+                                    + " and previous " + previousTs.getTime());
                     actualTime.setTimeInMillis(ts.getTime());
                     assertEquals(
-                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                    + format.format(actualTime.getTime()) + " at event " + eventCount,
                             0,
-                            expectedTime.compareTo(actualTime));
+                            expectedTime.compareTo(actualTime),
+                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                    + format.format(actualTime.getTime()) + " at event " + eventCount);
                     previousTs = ts;
                     expectedTime.add(Calendar.HOUR, 24);
                     eventCount++;
                 }
                 assertEquals(
-                        "Event count is not what we expect. We got " + eventCount + " for " + payloadType,
+                        expectedEventCount,
                         eventCount,
-                        expectedEventCount);
+                        "Event count is not what we expect. We got " + eventCount + " for " + payloadType);
             }
         }
     }
@@ -227,7 +228,7 @@ public class SinglePVRetrievalTest {
      * @throws Exception
      */
     @Test
-    public void testOneDaysWorthOfDBRDoubleData() throws Exception {
+    void testOneDaysWorthOfDBRDoubleData() throws Exception {
         try (FileInputStream fis = new FileInputStream("src/test/resources/sampledata/onedaysdbrdouble");
                 InputStreamBackedGenMsg is = new InputStreamBackedGenMsg(fis)) {
             int eventCount = 0;
@@ -242,22 +243,22 @@ public class SinglePVRetrievalTest {
                 Calendar actualTime = Calendar.getInstance(timeZone);
                 Timestamp ts = msg.getTimestamp();
                 assertTrue(
+                        ts.getTime() >= previousTs.getTime(),
                         "Not monotonically increasing timestamps at event " + eventCount + " time " + ts.getTime()
-                                + " and previous " + previousTs.getTime(),
-                        ts.getTime() >= previousTs.getTime());
+                                + " and previous " + previousTs.getTime());
                 actualTime.setTimeInMillis(ts.getTime());
                 if (expectedTime.compareTo(actualTime) != 0) {
                     assertEquals(
-                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
-                                    + format.format(actualTime.getTime()) + " at event " + eventCount,
                             0,
-                            expectedTime.compareTo(actualTime));
+                            expectedTime.compareTo(actualTime),
+                            "Expecting time to be " + format.format(expectedTime.getTime()) + " instead it is "
+                                    + format.format(actualTime.getTime()) + " at event " + eventCount);
                 }
                 previousTs = ts;
                 expectedTime.add(Calendar.SECOND, 1);
                 eventCount++;
             }
-            assertEquals("Event count is not what we expect. We got " + eventCount, 86400, eventCount);
+            assertEquals(86400, eventCount, "Event count is not what we expect. We got " + eventCount);
             long endMillis = System.currentTimeMillis();
             System.err.println("Time taken to process on days worth of data is " + (endMillis - startMillis) + "(ms)");
         }
